@@ -10,13 +10,15 @@ function App() {
     id: 0,
   });
 
-  const [taskList, setTaskList] = React.useState([{}]);
+  const [taskList, setTaskList] = React.useState([]);
 
   const addData = (key: string, value: string) => {
     setTask(t => ({ ...t, [key]: value }));
   }
 
   const addTask = () => {
+      if(task.title.trim() == "" )
+      return ;
     const newList = [...taskList, task];
     setTaskList(newList);
     setTask({
@@ -34,20 +36,26 @@ function App() {
         <TextInput
           value={task.title}
           placeholder='Title...'
-          onChangeText={(text) => { addData("title", text) }}></TextInput>
+          onChangeText={(text) => { addData("title", text) }}>
+          </TextInput>
         <TextInput
           value={task.description}
           placeholder='Description...'
-          onChangeText={(text) => { addData("description", text) }}></TextInput>
+          onChangeText={(text) => { addData("description", text) }}>
+          </TextInput>
+           <Button
+                  title='add'
+                  onPress={addTask}
+                  accessibilityLabel='add task to list'>
+                  </Button>
       </View>
-      <Button
-        title='add'
-        onPress={addTask}
-        accessibilityLabel='add task to list'></Button>
 
-      {taskList.map((t,index) => 
+<View>
+{taskList.map((t,index) =>
         <Text>{t.title+" - "+t.description}</Text>
       )}
+</View>
+
 
     </SafeAreaView>
   );
@@ -55,12 +63,7 @@ function App() {
 
 const styles = StyleSheet.create({
   appTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    color: '#000',
-    textAlign: 'center',
-    marginTop: 50,
+
   }
 })
 
