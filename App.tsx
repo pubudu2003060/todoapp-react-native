@@ -25,7 +25,7 @@ function App() {
       title: '',
       completed: false,
       description: '',
-      id: 0,
+      id: task.id+1,
     })
   }
 
@@ -52,7 +52,7 @@ function App() {
 
 <View>
 {taskList.map((t,index) =>
-        <Text>{t.title+" - "+t.description}</Text>
+        <Text key={t.id}>{t.id+" "+t.title+" - "+t.description}</Text>
       )}
 </View>
 
@@ -63,7 +63,7 @@ function App() {
 
 const styles = StyleSheet.create({
   appTitle: {
-
+marginTop:50
   }
 })
 
