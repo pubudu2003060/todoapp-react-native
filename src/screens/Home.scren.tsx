@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, Button, FlatList, Alert, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Button, FlatList, Alert, TouchableOpacity, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import ListItem from '../components/ListItem.component';
+import NoTasks from '../components/NoTasks.component';
 
 function Home() {
 
@@ -78,25 +80,15 @@ function Home() {
                 </View>
 
                 {taskList.length > 0 ?
-                    <FlatList
-                        data={taskList}
-                        renderItem={({ item }) => (
-                            <View>
-                                <View>
-                                    <Text>{item.title}</Text>
-                                    <Text>{item.description}</Text>
-                                </View>
-                                <View>
-                                    <Button title='x' onPress={() => { removeTask(item.id) }}></Button>
-                                </View>
-                            </View>
-                        )}
-                        keyExtractor={(item) => item.id.toString()}
-                    />
+
+                <ScrollView>
+                    {taskList.map((item) => (
+                       <ListItem item={item} removeTask={removeTask} />
+                    ))}
+                </ScrollView>
+                    
                     :
-                    <View>
-                        <Text>No tasks</Text>
-                    </View>
+                    <NoTasks></NoTasks>
                 }
             </View>
         </SafeAreaView>
@@ -113,6 +105,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'flex-start',
+        marginBottom: 33,
     },
     inputFields: {
         flex: 1,
