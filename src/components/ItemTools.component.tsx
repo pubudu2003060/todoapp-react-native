@@ -1,23 +1,44 @@
 import React, { useState } from 'react'
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Image, StyleSheet, Text, TouchableOpacity, View, Share } from 'react-native'
 import EditItem from './EditItem.component';
 import { ItemToolsProps, Task } from '../types/Types';
 
 
 const ItemTools = ({ item }: ItemToolsProps) => {
 
+  const onShare = async () => {
+    try {
+      const result = await Share.share({
+        message: `Task: ${item.title}\nDescription: ${item.description}`,
+      });
+
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          console.log('Shared with activity type:', result.activityType);
+        } else {
+          console.log('Shared successfully');
+        }
+      } else if (result.action === Share.dismissedAction) {
+        console.log('Share dismissed');
+      }
+    } catch (error:any) {
+      console.error('Error sharing item:', error.message);
+    }
+  };
+
+
   const [modalVisible, setModalVisible] = useState<boolean>(false);
 
   return (
     <>
       <View style={styles.toolbarContainer}>
-        <TouchableOpacity style={styles.toolButton}>
+        <TouchableOpacity style={styles.toolButton} onPress={onShare}>
           <Image
             source={require('../assets/Share.png')}
             style={styles.toolIcon}
           />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.toolButton}>
+        <TouchableOpacity style={styles.toolButton} >
           <Image
             source={require('../assets/i.png')}
             style={styles.toolIcon}
