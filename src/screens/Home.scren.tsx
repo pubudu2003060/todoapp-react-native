@@ -3,10 +3,11 @@ import { View, Text, TextInput, StyleSheet, Button, FlatList, Alert, TouchableOp
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ListItem from '../components/ListItem.component';
 import NoTasks from '../components/NoTasks.component';
+import DeleteConfirmation from '../components/DeleteConfirmation.component';
 
 function Home() {
 
-    const [task, setTask] = React.useState({
+    const [task, setTask] = useState({
         title: '',
         completed: false,
         description: '',
@@ -14,6 +15,9 @@ function Home() {
     });
 
     const [taskList, setTaskList] = useState([]);
+
+    const [modalVisible, setModalVisible] = useState(false);
+    const [taskToDelete, setTaskToDelete] = useState(null);
 
     const addData = (key: string, value: string) => {
         setTask(t => ({ ...t, [key]: value }));
@@ -32,25 +36,31 @@ function Home() {
         })
     }
 
-    const removeTask = (id: number) => {
-        Alert.alert(
-            "Delete Task",
-            "Are you sure you want to delete this task?",
-            [
-                {
-                    text: "Cancel",
-                    onPress: () => { },
-                    style: "cancel"
-                },
-                {
-                    text: "OK", onPress: () => {
-                        const newList = taskList.filter((item) => item.id !== id);
-                        setTaskList(newList);
-                    }
-                }
-            ]
-        )
-    }
+    const editTask = (itemId, newValue) => {
+        let newList = [...taskList];
+        let itemIndex = newList.findIndex((item) => item.id == itemId);
+        if (itemIndex < 0) return;
+        newList[itemIndex] = {
+            ...newList[itemIndex],
+            ...newValue,
+        };
+        setTaskList(newList);
+    };
+
+
+    const confirmDelete = (id) => {
+        setTaskToDelete(id);
+        setModalVisible(true);
+    };
+
+    const handleDelete = () => {
+        if (taskToDelete !== null) {
+            const newList = taskList.filter((item) => item.id !== taskToDelete);
+            setTaskList(newList);
+            setTaskToDelete(null);
+        }
+        setModalVisible(false);
+    };
 
 
     return (
@@ -81,15 +91,23 @@ function Home() {
 
                 {taskList.length > 0 ?
 
-                <ScrollView>
-                    {taskList.map((item) => (
-                       <ListItem item={item} removeTask={removeTask} />
-                    ))}
-                </ScrollView>
-                    
+                    <ScrollView>
+                        {taskList.map((item) => (
+                            <ListItem item={item} confirmDelete={() => { confirmDelete(item.id) }} />
+                        ))}
+                    </ScrollView>
+
                     :
                     <NoTasks></NoTasks>
                 }
+
+                <DeleteConfirmation
+                    visible={modalVisible}
+                    onClose={() => setModalVisible(false)}
+                    onDelete={handleDelete}
+                />
+
+
             </View>
         </SafeAreaView>
     );
@@ -142,14 +160,3 @@ const styles = StyleSheet.create({
 
 
 export default Home;
-
-
-
-
-
-
-
-
-
-
-
