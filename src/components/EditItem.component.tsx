@@ -1,7 +1,17 @@
 import { Button, Modal, Text, TextInput, View, StyleSheet, TouchableOpacity } from 'react-native';
-import { EditItemProps } from '../types/Types';
+import { EditItemProps, editTask } from '../types/Types';
+import { useContext, useState } from 'react';
+import { UserContext } from '../screens/Home.scren';
 
 const EditItem = ({ modalVisible, setModalVisible, item }: EditItemProps) => {
+
+    const [taskData, setTaskData] = useState({
+        title: item.title,
+        description: item.description,
+    });
+
+    const { editTask } = useContext(UserContext);
+
 
     return (
         <Modal
@@ -16,20 +26,29 @@ const EditItem = ({ modalVisible, setModalVisible, item }: EditItemProps) => {
                         placeholder='Mini Input...'
                         placeholderTextColor="#F0E3CAA3"
                         style={styles.input}
-                        value={item.title}
+                        value={taskData.title}
+                        onChangeText={(text) => setTaskData(prev => ({ ...prev, title: text }))}
+
                     />
                     <TextInput
                         placeholder='Max Input...'
                         placeholderTextColor="#F0E3CAA3"
                         multiline
                         style={[styles.input, styles.bigInput]}
-                        value={item.description}
+                        value={taskData.description}
+                        onChangeText={(text) => setTaskData(prev => ({ ...prev, description: text }))}
                     />
                     <View style={styles.buttonRow}>
                         <TouchableOpacity style={styles.button} onPress={() => setModalVisible(false)}>
                             <Text style={styles.buttonText}>Cancel</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.button} onPress={() => { }}>
+                        <TouchableOpacity
+                            style={styles.button}
+                            onPress={() => {
+                                editTask(item.id, taskData); 
+                                setModalVisible(false);      
+                            }}
+                        >
                             <Text style={styles.buttonText}>Save</Text>
                         </TouchableOpacity>
                     </View>
@@ -49,7 +68,7 @@ const styles = StyleSheet.create({
     modalContainer: {
         backgroundColor: '#1B1A17',
         padding: 18,
-        width:360,
+        width: 360,
         borderTopLeftRadius: 8,
         borderTopRightRadius: 8,
         borderWidth: 1,
@@ -65,7 +84,7 @@ const styles = StyleSheet.create({
         fontWeight: 400,
         lineHeight: 18,
         backgroundColor: '#242320',
-        width:324,
+        width: 324,
     },
     bigInput: {
         height: 340,
@@ -79,8 +98,8 @@ const styles = StyleSheet.create({
 
     },
     button: {
-        height:24,
-        width:64,
+        height: 24,
+        width: 64,
         borderWidth: 1,
         borderColor: '#FF8303',
         borderRadius: 5,

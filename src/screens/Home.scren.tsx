@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { createContext, useState } from 'react';
 import { View, Text, TextInput, StyleSheet, Button, FlatList, Alert, TouchableOpacity, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ListItem from '../components/ListItem.component';
 import NoTasks from '../components/NoTasks.component';
 import DeleteConfirmation from '../components/DeleteConfirmation.component';
-import { Task } from '../types/Types';
+import { Task, UserContextType } from '../types/Types';
+
+export const UserContext = createContext<UserContextType | null>(null);
 
 function Home() {
 
@@ -37,7 +39,7 @@ function Home() {
         })
     }
 
-    const editTask = (itemId:number, newValue:object) => {
+    const editTask = (itemId: number, newValue: object) => {
         let newList = [...taskList];
         let itemIndex = newList.findIndex((item) => item.id == itemId);
         if (itemIndex < 0) return;
@@ -49,7 +51,7 @@ function Home() {
     };
 
 
-    const confirmDelete = (id:number) => {
+    const confirmDelete = (id: number) => {
         setTaskToDelete(id);
         setModalVisible(true);
     };
@@ -94,7 +96,9 @@ function Home() {
 
                     <ScrollView>
                         {taskList.map((item) => (
-                            <ListItem item={item} confirmDelete={() => { confirmDelete(item.id) }} />
+                            <UserContext.Provider value={{editTask}}>
+                                <ListItem key={item.id} item={item} confirmDelete={() => { confirmDelete(item.id) }} />
+                            </UserContext.Provider>
                         ))}
                     </ScrollView>
 
@@ -110,7 +114,7 @@ function Home() {
 
 
             </View>
-        </SafeAreaView>
+        </SafeAreaView >
     );
 }
 

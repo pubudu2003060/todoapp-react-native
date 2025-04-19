@@ -5,12 +5,17 @@ export type Task = {
     id: number;
 };
 
+export type editTask = {
+    title: string;
+    description: string;
+};
+
 export type ListItemProps = {
     item: Task;
     confirmDelete: (id: number) => void;
 };
 
-export type ItemToolsProps =  {
+export type ItemToolsProps = {
     item: Task;
 }
 
@@ -24,5 +29,9 @@ export type DeleteConfirmationProps = {
     visible: boolean;
     onClose: () => void;
     onDelete: () => void;
-  }
+}
+
+export type UserContextType = {
+    editTask:(itemId: number, newValue: object) => void
+};
 
