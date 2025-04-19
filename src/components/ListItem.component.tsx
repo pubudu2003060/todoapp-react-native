@@ -3,11 +3,11 @@ import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import ItemTools from './ItemTools.component';
 import { ListItemProps } from '../types/Types';
 
-const ListItem = ({ item, confirmDelete }:ListItemProps) => {
+const ListItem = ({ item, confirmDelete }: ListItemProps) => {
 
   const [toolSetId, setToolSetId] = useState<number | null>(null);
 
-  const showToolset = (id:number) => {
+  const showToolset = (id: number) => {
     if (toolSetId == id) {
       setToolSetId(null)
       return
@@ -18,12 +18,12 @@ const ListItem = ({ item, confirmDelete }:ListItemProps) => {
   return (
     <>
       <View style={styles.taskContainer}>
-        <TouchableOpacity onPress={() => showToolset(item.id)}>
-          <View style={styles.taskContent}>
+        <View style={styles.taskContent}>
+          <TouchableOpacity onPress={() => showToolset(item.id)}>
             <Text style={styles.taskTitle}>{item.title}</Text>
             <Text style={styles.taskDescription}>{item.description}</Text>
-          </View>
-        </TouchableOpacity>
+          </TouchableOpacity>
+        </View>
         <TouchableOpacity
           style={styles.deleteButton}
           onPress={() => confirmDelete(item.id)}
@@ -54,6 +54,7 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   taskContent: {
+    marginRight:20,
     flex: 1,
   },
   taskTitle: {

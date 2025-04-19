@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react';
-import { View, Text, TextInput, StyleSheet, Button, FlatList, Alert, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Button, FlatList, Alert, TouchableOpacity, ScrollView, StatusBar} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ListItem from '../components/ListItem.component';
 import NoTasks from '../components/NoTasks.component';
@@ -55,7 +55,6 @@ function Home() {
         loadTasks();
     }, []);
 
-
     const addData = (key: string, value: string) => {
         setTask(t => ({ ...t, [key]: value }));
     }
@@ -76,7 +75,6 @@ function Home() {
         });
     };
 
-
     const editTask = (itemId: number, newValue: object) => {
         let newList = [...taskList];
         let itemIndex = newList.findIndex((item) => item.id == itemId);
@@ -87,7 +85,6 @@ function Home() {
         };
         setTaskList(newList);
     };
-
 
     const confirmDelete = (id: number) => {
         setTaskToDelete(id);
@@ -103,11 +100,12 @@ function Home() {
         setModalVisible(false);
     };
 
-
     return (
-        <SafeAreaView>
+        <SafeAreaView style={{ flex: 1 }}>
+            <StatusBar
+                barStyle="dark-content"
+            />
             <View style={styles.mainContainer}>
-
                 <View style={styles.inputContainer}>
                     <View style={styles.inputFields}>
                         <TextInput
@@ -129,7 +127,6 @@ function Home() {
                         <Text style={styles.addButtonText}>+</Text>
                     </TouchableOpacity>
                 </View>
-
                 {taskList.length > 0 ?
                     <UserContext.Provider value={{ editTask }}>
                         <ScrollView>
@@ -141,13 +138,11 @@ function Home() {
                     :
                     <NoTasks></NoTasks>
                 }
-
                 <DeleteConfirmation
                     visible={modalVisible}
                     onClose={() => setModalVisible(false)}
                     onDelete={handleDelete}
                 />
-
             </View>
         </SafeAreaView >
     );
@@ -182,8 +177,8 @@ const styles = StyleSheet.create({
         fontSize: 14,
     },
     addButton: {
-        width: 70,
-        height: 70,
+        width: 96,
+        height: 96,
         backgroundColor: '#1E1E1E',
         borderWidth: 1,
         borderColor: '#FF8303',
