@@ -11,6 +11,7 @@ export const UserContext = createContext<UserContextType | null>(null);
 
 function Home() {
 
+
     const [task, setTask] = useState<Task>({
         title: '',
         completed: false,
@@ -22,6 +23,9 @@ function Home() {
 
     const [isInitialized, setIsInitialized] = useState<boolean>(false);
 
+    const [modalVisible, setModalVisible] = useState<boolean>(false);
+
+    const [taskToDelete, setTaskToDelete] = useState<number | null>(null);
 
     useEffect(() => {
         if (!isInitialized) return;
@@ -45,15 +49,12 @@ function Home() {
             } catch (e) {
                 console.error('Failed to load tasks:', e);
             } finally {
-                setIsInitialized(true); // ✅ Now allow saving
+                setIsInitialized(true);
             }
         };
         loadTasks();
     }, []);
 
-
-    const [modalVisible, setModalVisible] = useState<boolean>(false);
-    const [taskToDelete, setTaskToDelete] = useState<number | null>(null);
 
     const addData = (key: string, value: string) => {
         setTask(t => ({ ...t, [key]: value }));
@@ -130,7 +131,6 @@ function Home() {
                 </View>
 
                 {taskList.length > 0 ?
-
                     <UserContext.Provider value={{ editTask }}>
                         <ScrollView>
                             {taskList.map((item) => (
@@ -138,8 +138,6 @@ function Home() {
                             ))}
                         </ScrollView>
                     </UserContext.Provider>
-
-
                     :
                     <NoTasks></NoTasks>
                 }
@@ -149,7 +147,6 @@ function Home() {
                     onClose={() => setModalVisible(false)}
                     onDelete={handleDelete}
                 />
-
 
             </View>
         </SafeAreaView >
@@ -200,6 +197,5 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
 })
-
 
 export default Home;
