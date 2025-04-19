@@ -1,10 +1,11 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import { View, Text, TextInput, StyleSheet, Button, FlatList, Alert, TouchableOpacity, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ListItem from '../components/ListItem.component';
 import NoTasks from '../components/NoTasks.component';
 import DeleteConfirmation from '../components/DeleteConfirmation.component';
 import { Task, UserContextType } from '../types/Types';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const UserContext = createContext<UserContextType | null>(null);
 
@@ -19,6 +20,38 @@ function Home() {
 
     const [taskList, setTaskList] = useState<Task[]>([]);
 
+    const [isInitialized, setIsInitialized] = useState<boolean>(false);
+
+
+    useEffect(() => {
+        if (!isInitialized) return;
+        const saveTask = async () => {
+            try {
+                const jsonValue = JSON.stringify(taskList);
+                await AsyncStorage.setItem('@task_list', jsonValue);
+            } catch (e) {
+                console.error('Failed to save tasks:', e);
+            }
+        };
+        saveTask();
+    }, [taskList, isInitialized]);
+
+    useEffect(() => {
+        const loadTasks = async () => {
+            try {
+                const jsonValue = await AsyncStorage.getItem('@task_list');
+                const tasks: Task[] = jsonValue != null ? JSON.parse(jsonValue) : [];
+                setTaskList(tasks);
+            } catch (e) {
+                console.error('Failed to load tasks:', e);
+            } finally {
+                setIsInitialized(true); // ✅ Now allow saving
+            }
+        };
+        loadTasks();
+    }, []);
+
+
     const [modalVisible, setModalVisible] = useState<boolean>(false);
     const [taskToDelete, setTaskToDelete] = useState<number | null>(null);
 
@@ -27,17 +60,21 @@ function Home() {
     }
 
     const addTask = () => {
-        if (task.title.trim() == "")
-            return;
-        const newList = [...taskList, task];
+        if (task.title.trim() === "") return;
+        const newTask: Task = {
+            ...task,
+            id: Date.now(),
+        };
+        const newList = [...taskList, newTask];
         setTaskList(newList);
         setTask({
             title: '',
             completed: false,
             description: '',
-            id: task.id + 1,
-        })
-    }
+            id: 0,
+        });
+    };
+
 
     const editTask = (itemId: number, newValue: object) => {
         let newList = [...taskList];
@@ -94,13 +131,14 @@ function Home() {
 
                 {taskList.length > 0 ?
 
-                    <ScrollView>
-                        {taskList.map((item) => (
-                            <UserContext.Provider value={{editTask}}>
+                    <UserContext.Provider value={{ editTask }}>
+                        <ScrollView>
+                            {taskList.map((item) => (
                                 <ListItem key={item.id} item={item} confirmDelete={() => { confirmDelete(item.id) }} />
-                            </UserContext.Provider>
-                        ))}
-                    </ScrollView>
+                            ))}
+                        </ScrollView>
+                    </UserContext.Provider>
+
 
                     :
                     <NoTasks></NoTasks>

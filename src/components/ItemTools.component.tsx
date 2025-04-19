@@ -34,13 +34,13 @@ const ItemTools = ({ item }: ItemToolsProps) => {
       <View style={styles.toolbarContainer}>
         <TouchableOpacity style={styles.toolButton} onPress={onShare}>
           <Image
-            source={require('../assets/Share.png')}
+            source={require('../assets/share.png')}
             style={styles.toolIcon}
           />
         </TouchableOpacity>
         <TouchableOpacity style={styles.toolButton} >
           <Image
-            source={require('../assets/i.png')}
+            source={require('../assets/info.png')}
             style={styles.toolIcon}
           />
         </TouchableOpacity>
