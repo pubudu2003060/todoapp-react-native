@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Modal, StyleSheet } from 'react-native';
+import { DeleteConfirmationProps } from '../types/Types';
 
-const DeleteConfirmation = ({ visible, onClose, onDelete }) => {
+const DeleteConfirmation = ({ visible, onClose, onDelete }: DeleteConfirmationProps) => {
   return (
     <Modal
       transparent={true}

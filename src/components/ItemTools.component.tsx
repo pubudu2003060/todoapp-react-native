@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import EditItem from './EditItem.component';
+import { ItemToolsProps, Task } from '../types/Types';
 
-const ItemTools = ({ item }) => {
 
+const ItemTools = ({ item }: ItemToolsProps) => {
 
-  const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
 
   return (
     <>

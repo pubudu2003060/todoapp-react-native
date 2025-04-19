@@ -4,20 +4,21 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import ListItem from '../components/ListItem.component';
 import NoTasks from '../components/NoTasks.component';
 import DeleteConfirmation from '../components/DeleteConfirmation.component';
+import { Task } from '../types/Types';
 
 function Home() {
 
-    const [task, setTask] = useState({
+    const [task, setTask] = useState<Task>({
         title: '',
         completed: false,
         description: '',
         id: 0,
     });
 
-    const [taskList, setTaskList] = useState([]);
+    const [taskList, setTaskList] = useState<Task[]>([]);
 
-    const [modalVisible, setModalVisible] = useState(false);
-    const [taskToDelete, setTaskToDelete] = useState(null);
+    const [modalVisible, setModalVisible] = useState<boolean>(false);
+    const [taskToDelete, setTaskToDelete] = useState<number | null>(null);
 
     const addData = (key: string, value: string) => {
         setTask(t => ({ ...t, [key]: value }));
@@ -36,7 +37,7 @@ function Home() {
         })
     }
 
-    const editTask = (itemId, newValue) => {
+    const editTask = (itemId:number, newValue:object) => {
         let newList = [...taskList];
         let itemIndex = newList.findIndex((item) => item.id == itemId);
         if (itemIndex < 0) return;
@@ -48,7 +49,7 @@ function Home() {
     };
 
 
-    const confirmDelete = (id) => {
+    const confirmDelete = (id:number) => {
         setTaskToDelete(id);
         setModalVisible(true);
     };

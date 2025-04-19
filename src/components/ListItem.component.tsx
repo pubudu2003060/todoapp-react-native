@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import ItemTools from './ItemTools.component';
+import { ListItemProps } from '../types/Types';
 
-const ListItem = ({ item, confirmDelete }) => {
+const ListItem = ({ item, confirmDelete }:ListItemProps) => {
 
   const [toolSetId, setToolSetId] = useState<number | null>(null);
 
-  const showToolset = (id) => {
+  const showToolset = (id:number) => {
     if (toolSetId == id) {
       setToolSetId(null)
       return

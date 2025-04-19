@@ -1,8 +1,7 @@
 import { Button, Modal, Text, TextInput, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { EditItemProps } from '../types/Types';
 
-const EditItem = ({ modalVisible, setModalVisible,item }) => {
-
-
+const EditItem = ({ modalVisible, setModalVisible, item }: EditItemProps) => {
 
     return (
         <Modal
