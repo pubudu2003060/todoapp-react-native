@@ -1,23 +1,25 @@
 import React, { createContext, useEffect, useState } from 'react';
-import { View, Text, TextInput, StyleSheet, Button, FlatList, Alert, TouchableOpacity, ScrollView, StatusBar} from 'react-native';
+import { View, Text, TextInput, StyleSheet, Button, FlatList, Alert, TouchableOpacity, ScrollView, StatusBar } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ListItem from '../components/ListItem.component';
 import NoTasks from '../components/NoTasks.component';
 import DeleteConfirmation from '../components/DeleteConfirmation.component';
 import { Task, UserContextType } from '../types/Types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useTaskStore } from '../store/Store';
 
 export const UserContext = createContext<UserContextType | null>(null);
 
 function Home() {
 
+    const {task,addData,removeData} = useTaskStore(state => state)
 
-    const [task, setTask] = useState<Task>({
-        title: '',
-        completed: false,
-        description: '',
-        id: 0,
-    });
+    // const [task, setTask] = useState<Task>({
+    //     title: '',
+    //     completed: false,
+    //     description: '',
+    //     id: 0,
+    // });
 
     const [taskList, setTaskList] = useState<Task[]>([]);
 
@@ -55,9 +57,9 @@ function Home() {
         loadTasks();
     }, []);
 
-    const addData = (key: string, value: string) => {
-        setTask(t => ({ ...t, [key]: value }));
-    }
+    // const addData = (key: string, value: string) => {
+    //     setTask(t => ({ ...t, [key]: value }));
+    // }
 
     const addTask = () => {
         if (task.title.trim() === "") return;
@@ -67,12 +69,7 @@ function Home() {
         };
         const newList = [...taskList, newTask];
         setTaskList(newList);
-        setTask({
-            title: '',
-            completed: false,
-            description: '',
-            id: 0,
-        });
+        removeData()
     };
 
     const editTask = (itemId: number, newValue: object) => {

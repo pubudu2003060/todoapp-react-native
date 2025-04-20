@@ -35,3 +35,8 @@ export type UserContextType = {
     editTask:(itemId: number, newValue: object) => void
 };
 
+export type taskStore = {
+    task:Task,
+    addData:(key: string, value: string) => void,
+    removeData:() => void,
+}
