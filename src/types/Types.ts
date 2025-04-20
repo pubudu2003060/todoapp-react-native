@@ -32,11 +32,23 @@ export type DeleteConfirmationProps = {
 }
 
 export type UserContextType = {
-    editTask:(itemId: number, newValue: object) => void
+    editTask: (itemId: number, newValue: object) => void
 };
 
 export type taskStore = {
-    task:Task,
-    addData:(key: string, value: string) => void,
-    removeData:() => void,
+    task: Task,
+    addData: (key: string, value: string) => void,
+    removeData: () => void,
+}
+
+export type tasksStore = {
+    taskList: Task[],
+    modalVisible: boolean,
+    taskToDelete: number | null,
+    setTaskList:(initialTaskList:Task[]) => void,
+    addTask: (task:Task) => void,
+    editTask: (itemId: number, newValue: object) => void,
+    confirmDelete: (id: number) => void,
+    handleDelete: () => void,
+    closeModel:() => void
 }

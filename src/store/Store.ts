@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { taskStore } from "../types/Types";
+import { tasksStore, taskStore } from "../types/Types";
 
 export const useTaskStore = create<taskStore>((set) => ({
     task: {
@@ -23,4 +23,66 @@ export const useTaskStore = create<taskStore>((set) => ({
             },
         }));
     },
+}))
+
+export const useTasksStore = create<tasksStore>((set) => ({
+    taskList: [],
+    modalVisible: false,
+    taskToDelete: null,
+    setTaskList: (initialTaskList) => {
+        set((state) => ({
+            taskList: initialTaskList
+        }))
+    },
+    addTask: () => {
+        const { task, removeData } = useTaskStore.getState();
+        if (task.title.trim() === "") return;
+        const newTask = {
+            ...task,
+            id: Date.now(),
+        };
+        set((state) => ({
+            taskList: [...state.taskList, newTask]
+        }))
+        removeData()
+    },
+    editTask: (itemId, newValue) => {
+        set((state) => {
+            const newList = [...state.taskList];
+            const itemIndex = newList.findIndex((item) => item.id == itemId);
+            if (itemIndex < 0) return state;
+            newList[itemIndex] = {
+                ...newList[itemIndex],
+                ...newValue,
+            };
+            return { taskList: newList };
+        })
+
+    },
+    confirmDelete: (id) => {
+        set((state) => ({
+            taskToDelete: id,
+            modalVisible: true,
+        }))
+    },
+    handleDelete: () => {
+        set((state) => {
+            if (state.taskToDelete !== null) {
+                const newList = state.taskList.filter((item) => item.id !== state.taskToDelete);
+                return {
+                    taskList: newList,
+                    taskToDelete: null,
+                    modalVisible: false
+                }
+            }
+            return {
+                modalVisible: false
+            }
+        })
+    },
+    closeModel:() => {
+        set((state) => ({
+            modalVisible:false
+        }))
+    }
 }))

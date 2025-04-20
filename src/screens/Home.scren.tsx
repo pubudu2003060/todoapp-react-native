@@ -6,28 +6,17 @@ import NoTasks from '../components/NoTasks.component';
 import DeleteConfirmation from '../components/DeleteConfirmation.component';
 import { Task, UserContextType } from '../types/Types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useTaskStore } from '../store/Store';
+import { useTasksStore, useTaskStore } from '../store/Store';
 
 export const UserContext = createContext<UserContextType | null>(null);
 
 function Home() {
 
-    const {task,addData,removeData} = useTaskStore(state => state)
+    const { task, addData, removeData } = useTaskStore(state => state)
 
-    // const [task, setTask] = useState<Task>({
-    //     title: '',
-    //     completed: false,
-    //     description: '',
-    //     id: 0,
-    // });
-
-    const [taskList, setTaskList] = useState<Task[]>([]);
+    const { taskList, modalVisible, taskToDelete, setTaskList, addTask, editTask, confirmDelete, handleDelete, closeModel } = useTasksStore(state => state)
 
     const [isInitialized, setIsInitialized] = useState<boolean>(false);
-
-    const [modalVisible, setModalVisible] = useState<boolean>(false);
-
-    const [taskToDelete, setTaskToDelete] = useState<number | null>(null);
 
     useEffect(() => {
         if (!isInitialized) return;
@@ -57,45 +46,6 @@ function Home() {
         loadTasks();
     }, []);
 
-    // const addData = (key: string, value: string) => {
-    //     setTask(t => ({ ...t, [key]: value }));
-    // }
-
-    const addTask = () => {
-        if (task.title.trim() === "") return;
-        const newTask: Task = {
-            ...task,
-            id: Date.now(),
-        };
-        const newList = [...taskList, newTask];
-        setTaskList(newList);
-        removeData()
-    };
-
-    const editTask = (itemId: number, newValue: object) => {
-        let newList = [...taskList];
-        let itemIndex = newList.findIndex((item) => item.id == itemId);
-        if (itemIndex < 0) return;
-        newList[itemIndex] = {
-            ...newList[itemIndex],
-            ...newValue,
-        };
-        setTaskList(newList);
-    };
-
-    const confirmDelete = (id: number) => {
-        setTaskToDelete(id);
-        setModalVisible(true);
-    };
-
-    const handleDelete = () => {
-        if (taskToDelete !== null) {
-            const newList = taskList.filter((item) => item.id !== taskToDelete);
-            setTaskList(newList);
-            setTaskToDelete(null);
-        }
-        setModalVisible(false);
-    };
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -137,7 +87,7 @@ function Home() {
                 }
                 <DeleteConfirmation
                     visible={modalVisible}
-                    onClose={() => setModalVisible(false)}
+                    onClose={closeModel}
                     onDelete={handleDelete}
                 />
             </View>
