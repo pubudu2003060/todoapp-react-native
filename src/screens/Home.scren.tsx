@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react';
-import { View, Text, TextInput, StyleSheet, Button, FlatList, Alert, TouchableOpacity, ScrollView, StatusBar } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Button, FlatList, Alert, TouchableOpacity, ScrollView, StatusBar, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ListItem from '../components/ListItem.component';
 import NoTasks from '../components/NoTasks.component';
@@ -71,7 +71,7 @@ function Home() {
                         />
                     </View>
                     <TouchableOpacity style={styles.addButton} onPress={addTask}>
-                        <Text style={styles.addButtonText}>+</Text>
+                       <Image style={styles.addButtonImage} source={require('../assets/add.png')}></Image>
                     </TouchableOpacity>
                 </View>
                 {taskList.length > 0 ?
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     mainContainer: {
         backgroundColor: '#1B1A17',
         minHeight: '100%',
-        padding: 23,
+        padding: 16,
     },
     inputContainer: {
         flexDirection: 'row',
@@ -110,33 +110,30 @@ const styles = StyleSheet.create({
     inputFields: {
         flex: 1,
         marginRight: 10,
-        gap: 6,
+        gap:6
     },
     textInput: {
-        height: 40,
         borderWidth: 1,
         borderColor: '#FF8303',
         borderRadius: 5,
-        marginBottom: 10,
         paddingHorizontal: 10,
         backgroundColor: '#1E1E1E',
         color: '#FFFFFF',
         fontSize: 14,
     },
     addButton: {
-        width: 96,
-        height: 96,
+        width: 91,
+        height: 91,
         backgroundColor: '#1E1E1E',
         borderWidth: 1,
         borderColor: '#FF8303',
         borderRadius: 5,
-        justifyContent: 'center',
-        alignItems: 'center',
+        alignItems:'center',
+        justifyContent:'center'
     },
-    addButtonText: {
-        color: '#FF8303',
-        fontSize: 24,
-        fontWeight: 'bold',
+    addButtonImage: {
+        width: 30,
+        height: 30,
     },
 })
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Alert, Image } from 'react-native';
 import ItemTools from './ItemTools.component';
 import { ListItemProps } from '../types/Types';
 
@@ -28,7 +28,7 @@ const ListItem = ({ item, confirmDelete }: ListItemProps) => {
           style={styles.deleteButton}
           onPress={() => confirmDelete(item.id)}
         >
-          <Text style={styles.deleteButtonText}>×</Text>
+          <Image  style={styles.deleteButtonImage} source={require('../assets/add.png')}></Image>
         </TouchableOpacity>
       </View>
       {toolSetId == item.id ?
@@ -50,18 +50,18 @@ const styles = StyleSheet.create({
     borderColor: '#FF8303',
     overflow: 'hidden',
     marginBottom: 10,
-    maxHeight: 72,
-    padding: 16,
+    maxHeight: 65,
+    padding: 9,
+    paddingLeft: 16,
+    paddingRight: 16,
   },
   taskContent: {
-    marginRight:20,
     flex: 1,
   },
   taskTitle: {
     color: '#f0e3ca',
     fontWeight: '400',
-    fontSize: 24,
-    marginBottom: 4,
+    fontSize: 20,
   },
   taskDescription: {
     color: '#f0e3ca',
@@ -77,11 +77,11 @@ const styles = StyleSheet.create({
     borderColor: '#FF8303',
     borderRadius: 5,
   },
-  deleteButtonText: {
-    color: '#FF8303',
-    fontSize: 24,
-    fontWeight: 'bold',
-  },
+  deleteButtonImage: {
+    height: 11,
+    width: 11,
+    transform: [{ rotate: '45deg' }],
+  }
 });
 
 export default ListItem;

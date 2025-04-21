@@ -46,7 +46,7 @@ export type tasksStore = {
     modalVisible: boolean,
     taskToDelete: number | null,
     setTaskList:(initialTaskList:Task[]) => void,
-    addTask: (task:Task) => void,
+    addTask: () => void,
     editTask: (itemId: number, newValue: object) => void,
     confirmDelete: (id: number) => void,
     handleDelete: () => void,
