@@ -3,8 +3,11 @@ import { View, Text, StyleSheet, TouchableOpacity, Alert, Image } from 'react-na
 import ItemTools from './ItemTools.component';
 import { ListItemProps } from '../types/Types';
 import { useTasksStore } from '../store/Store';
+import CheckBox from '@react-native-community/checkbox';
 
 const ListItem = ({ item }: ListItemProps) => {
+
+  const [toggleCheckBox, setToggleCheckBox] = useState(false)
 
   const [toolSetId, setToolSetId] = useState<number | null>(null);
 
@@ -25,9 +28,14 @@ const ListItem = ({ item }: ListItemProps) => {
             <Text style={styles.taskDescription}>{item.description}</Text>
           </TouchableOpacity>
         </View>
-        {/*checklist*/}
-          <Image  style={styles.deleteButtonImage} source={require('../assets/add.png')}></Image>
-       
+        <View>
+
+          <CheckBox
+            disabled={false}
+            value={toggleCheckBox}
+            onValueChange={(newValue) => setToggleCheckBox(newValue)}
+          />
+        </View>
       </View>
       {toolSetId == item.id ?
         <ItemTools item={item}></ItemTools>
