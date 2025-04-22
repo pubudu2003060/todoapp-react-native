@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react';
-import { View, Text, TextInput, StyleSheet, Button, FlatList, Alert, TouchableOpacity, ScrollView, StatusBar, Image } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Button, TouchableOpacity, ScrollView, StatusBar, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ListItem from '../components/ListItem.component';
 import NoTasks from '../components/NoTasks.component';
@@ -8,13 +8,11 @@ import { Task, UserContextType } from '../types/Types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useTasksStore, useTaskStore } from '../store/Store';
 
-export const UserContext = createContext<UserContextType | null>(null);
-
 function Home() {
-
+    
     const { task, addData, removeData } = useTaskStore(state => state)
 
-    const { taskList, modalVisible, taskToDelete, setTaskList, addTask, editTask, confirmDelete, handleDelete, closeModel } = useTasksStore(state => state)
+    const { taskList, taskToDelete, setTaskList, addTask, editTask } = useTasksStore(state => state)
 
     const [isInitialized, setIsInitialized] = useState<boolean>(false);
 
@@ -57,14 +55,14 @@ function Home() {
                     <View style={styles.inputFields}>
                         <TextInput
                             placeholder="Title..."
-                            placeholderTextColor="#F0E3CAA3"
+                            placeholderTextColor="#F0E3CA"
                             value={task.title}
                             onChangeText={(text) => addData('title', text)}
                             style={styles.textInput}
                         />
                         <TextInput
                             placeholder="About..."
-                            placeholderTextColor="#F0E3CAA3"
+                            placeholderTextColor="#F0E3CA"
                             value={task.description}
                             onChangeText={(text) => addData('description', text)}
                             style={styles.textInput}
@@ -75,21 +73,15 @@ function Home() {
                     </TouchableOpacity>
                 </View>
                 {taskList.length > 0 ?
-                    <UserContext.Provider value={{ editTask }}>
                         <ScrollView>
                             {taskList.map((item) => (
-                                <ListItem key={item.id} item={item} confirmDelete={() => { confirmDelete(item.id) }} />
+                                <ListItem key={item.id} item={item} />
                             ))}
                         </ScrollView>
-                    </UserContext.Provider>
                     :
                     <NoTasks></NoTasks>
                 }
-                <DeleteConfirmation
-                    visible={modalVisible}
-                    onClose={closeModel}
-                    onDelete={handleDelete}
-                />
+                <DeleteConfirmation/>
             </View>
         </SafeAreaView >
     );
@@ -117,14 +109,14 @@ const styles = StyleSheet.create({
         borderColor: '#FF8303',
         borderRadius: 5,
         paddingHorizontal: 10,
-        backgroundColor: '#1E1E1E',
-        color: '#FFFFFF',
+        backgroundColor: '#242320',
+        color: '#F0E3CA',
         fontSize: 14,
     },
     addButton: {
         width: 91,
         height: 91,
-        backgroundColor: '#1E1E1E',
+        backgroundColor: '#1B1A17',
         borderWidth: 1,
         borderColor: '#FF8303',
         borderRadius: 5,

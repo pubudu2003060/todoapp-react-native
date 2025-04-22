@@ -12,7 +12,6 @@ export type editTask = {
 
 export type ListItemProps = {
     item: Task;
-    confirmDelete: (id: number) => void;
 };
 
 export type ItemToolsProps = {
@@ -23,12 +22,6 @@ export type EditItemProps = {
     modalVisible: boolean;
     setModalVisible: (visible: boolean) => void;
     item: Task;
-}
-
-export type DeleteConfirmationProps = {
-    visible: boolean;
-    onClose: () => void;
-    onDelete: () => void;
 }
 
 export type UserContextType = {

@@ -1,30 +1,35 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Modal, StyleSheet } from 'react-native';
-import { DeleteConfirmationProps } from '../types/Types';
+import { useTasksStore } from '../store/Store';
 
-const DeleteConfirmation = ({ visible, onClose, onDelete }: DeleteConfirmationProps) => {
+const DeleteConfirmation = () => {
+
+  const { modalVisible, handleDelete, closeModel } = useTasksStore(state => state)
+  
+
   return (
     <Modal
       transparent={true}
-      visible={visible}
+      visible={modalVisible}
       animationType="fade"
-      onRequestClose={onClose}
+      onRequestClose={closeModel}
     >
       <View style={styles.modalOverlay}>
         <View style={styles.modalContainer}>
+          <View style={styles.topBar}></View>
           <Text style={styles.modalTitle}>Delete this task?</Text>
-          
+
           <View style={styles.buttonContainer}>
-            <TouchableOpacity 
-              style={[styles.button, styles.yesButton]} 
-              onPress={onDelete}
+            <TouchableOpacity
+              style={[styles.button, styles.yesButton]}
+              onPress={handleDelete}
             >
               <Text style={styles.buttonText}>Yes</Text>
             </TouchableOpacity>
-            
-            <TouchableOpacity 
-              style={[styles.button, styles.noButton]} 
-              onPress={onClose}
+
+            <TouchableOpacity
+              style={[styles.button, styles.noButton]}
+              onPress={closeModel}
             >
               <Text style={styles.buttonText}>No</Text>
             </TouchableOpacity>
@@ -44,12 +49,18 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     width: 281,
-    height: 143,
     backgroundColor: '#1B1A17',
     borderWidth: 4,
-    borderTopColor: '#A35709', 
     padding: 20,
+    paddingTop: 30,
+    paddingBottom: 20,
     alignItems: 'center',
+  },
+  topBar:{
+    width: 273,
+    height: 4,
+    backgroundColor: '#A35709',
+    position: 'absolute',
   },
   modalTitle: {
     color: '#FFFFFF',
@@ -72,13 +83,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   yesButton: {
-    borderColor: '#FF8303', 
-    backgroundColor: 'transparent',
+    borderColor: '#A35709',
+    backgroundColor: '242320',
     marginRight: 10,
   },
   noButton: {
-    borderColor: '#FF8303', 
-    backgroundColor: 'transparent',
+    borderColor: '#A35709',
+    backgroundColor: '242320',
     marginLeft: 10,
   },
   buttonText: {

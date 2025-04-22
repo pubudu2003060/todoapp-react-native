@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Alert, Image } from 'react-native';
 import ItemTools from './ItemTools.component';
 import { ListItemProps } from '../types/Types';
+import { useTasksStore } from '../store/Store';
 
-const ListItem = ({ item, confirmDelete }: ListItemProps) => {
+const ListItem = ({ item }: ListItemProps) => {
+
+   const { confirmDelete } = useTasksStore(state => state)
 
   const [toolSetId, setToolSetId] = useState<number | null>(null);
 
@@ -44,10 +47,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#1E1E1E',
+    backgroundColor: '#242320',
     borderRadius: 5,
-    borderWidth: 1,
-    borderColor: '#FF8303',
+    borderWidth: 2,
+    borderColor: '#A35709',
     overflow: 'hidden',
     marginBottom: 10,
     maxHeight: 65,
@@ -59,12 +62,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   taskTitle: {
-    color: '#f0e3ca',
+    color: '#F0E3CA',
     fontWeight: '400',
     fontSize: 20,
   },
   taskDescription: {
-    color: '#f0e3ca',
+    color: '#F0E3CA',
     fontSize: 14,
     fontWeight: '400',
   },
