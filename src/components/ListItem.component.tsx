@@ -6,8 +6,6 @@ import { useTasksStore } from '../store/Store';
 
 const ListItem = ({ item }: ListItemProps) => {
 
-   const { confirmDelete } = useTasksStore(state => state)
-
   const [toolSetId, setToolSetId] = useState<number | null>(null);
 
   const showToolset = (id: number) => {
@@ -27,12 +25,9 @@ const ListItem = ({ item }: ListItemProps) => {
             <Text style={styles.taskDescription}>{item.description}</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity
-          style={styles.deleteButton}
-          onPress={() => confirmDelete(item.id)}
-        >
+        {/*checklist*/}
           <Image  style={styles.deleteButtonImage} source={require('../assets/add.png')}></Image>
-        </TouchableOpacity>
+       
       </View>
       {toolSetId == item.id ?
         <ItemTools item={item}></ItemTools>

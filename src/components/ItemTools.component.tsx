@@ -2,9 +2,12 @@ import React, { useState } from 'react'
 import { Image, StyleSheet, Text, TouchableOpacity, View, Share } from 'react-native'
 import EditItem from './EditItem.component';
 import { ItemToolsProps, Task } from '../types/Types';
+import { useTasksStore } from '../store/Store';
 
 
 const ItemTools = ({ item }: ItemToolsProps) => {
+
+     const { confirmDelete } = useTasksStore(state => state)
 
   const onShare = async () => {
     try {
@@ -50,6 +53,12 @@ const ItemTools = ({ item }: ItemToolsProps) => {
             style={styles.toolIcon}
           />
         </TouchableOpacity>
+        <TouchableOpacity style={styles.toolButton} onPress={() => confirmDelete(item.id)}>
+          <Image
+            source={require('../assets/add.png')}
+            style={[styles.toolIcon, styles.deleteButtonImage]}
+          />
+        </TouchableOpacity>
       </View>
 
       <EditItem
@@ -74,17 +83,21 @@ const styles = StyleSheet.create({
     height: 36,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#1E1E1E',
+    backgroundColor: '#242320',
     borderRadius: 4,
     borderWidth: 1,
-    borderColor: '#FF8303',
+    borderColor: '#A35709',
     marginLeft: 8,
   },
   toolIcon: {
     width: 18,
     height: 18,
     tintColor: '#FFFFFF',
+  },
+  deleteButtonImage:{
+    transform: [{ rotate: '45deg' }],
   }
+  
 });
 
 export default ItemTools
