@@ -16,9 +16,9 @@ const AppNavigation = () => {
                 headerStyle: {
                     backgroundColor: '#1B1A17',
                 },
-                headerTintColor: '#F0E3CA',
+                headerTintColor: '#FFF',
                 headerTitleStyle: {
-                    fontSize: 20,
+                    fontSize: 24,
                 },
                 animation: 'slide_from_right',
                 headerBackVisible: false,

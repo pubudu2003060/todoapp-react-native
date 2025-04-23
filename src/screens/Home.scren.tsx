@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react';
-import { View, TextInput, StyleSheet, TouchableOpacity, ScrollView, StatusBar, Image } from 'react-native';
+import { View, TextInput, StyleSheet, TouchableOpacity, ScrollView, StatusBar, Image, BackHandler } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ListItem from '../components/ListItem.component';
 import NoTasks from '../components/NoTasks.component';
@@ -11,7 +11,7 @@ import Input from '../components/Input.Component';
 
 function Home() {
 
-    const { task, addData,  } = useTaskStore(state => state)
+    const { task, addData, } = useTaskStore(state => state)
 
     const { taskList, taskToDelete, setTaskList, addTask, editTask } = useTasksStore(state => state)
 
@@ -31,6 +31,19 @@ function Home() {
     }, [taskList, isInitialized]);
 
     useEffect(() => {
+        const onBackPress = () => {
+            BackHandler.exitApp()
+            return true;
+        };
+        const backHandler = BackHandler.addEventListener(
+            'hardwareBackPress',
+            onBackPress
+        );
+
+        return () => backHandler.remove();
+    }, []);
+
+    useEffect(() => {
         const loadTasks = async () => {
             try {
                 const jsonValue = await AsyncStorage.getItem('@task_list');
@@ -47,7 +60,7 @@ function Home() {
 
 
     return (
-        <SafeAreaView style={{ flex: 1,backgroundColor: '#1B1A17', padding:0,margin:0 }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: '#1B1A17' }}>
             <StatusBar
                 backgroundColor="#1B1A17"
                 barStyle="light-content"
@@ -56,7 +69,7 @@ function Home() {
                 hidden={false}
             />
             <View style={styles.mainContainer}>
-               <Input></Input>
+                <Input></Input>
                 {taskList.length > 0 ?
                     <ScrollView>
                         {taskList.map((item) => (
@@ -77,7 +90,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#1B1A17',
         minHeight: '100%',
         padding: 16,
-        top: 0,
     },
     inputContainer: {
         flexDirection: 'row',
