@@ -1,10 +1,15 @@
-import Home from "./src/screens/Home.scren"
+import * as React from 'react';
+import { NavigationContainer } from "@react-navigation/native"
+import AppNavigation from "./src/navigation/AppNavigation";
 
 
-const App = () => { 
-return(
-  <Home></Home>
-)
+
+const App = () => {
+  return (
+    <NavigationContainer>
+      <AppNavigation></AppNavigation>
+    </NavigationContainer>
+  )
 }
 
 export default App;
