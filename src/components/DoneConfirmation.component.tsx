@@ -1,38 +1,40 @@
 import React, { useContext, useState } from 'react';
 import { View, Text, TouchableOpacity, Modal, StyleSheet } from 'react-native';
 import { useTasksStore } from '../store/Store';
-import { deleteContextType } from '../types/Types';
-import { deleteContext } from './ItemTools.component';
+import { deleteContextType, doneContextType } from '../types/Types';
+import { doneContext } from './ListItem.component';
 
-const DeleteConfirmation = () => {
+const DoneConfirmation = ({id}:{ id: number }) => {
 
-  const { handleDelete } = useTasksStore(state => state)
+  const { doneTask } = useTasksStore(state => state)
 
-  const {deleteModelVisible, setDeleteModelVisible} = useContext(deleteContext) as deleteContextType
+  const {doneModelVisible, setDoneModelVisible,toggleCheckBox,setToggleCheckBox} = useContext(doneContext) as doneContextType
   
   return (
     <Modal
       transparent={true}
-      visible={deleteModelVisible}
+      visible={doneModelVisible}
       animationType="fade"
-      onRequestClose={() => setDeleteModelVisible(false)}
+      onRequestClose={() => setDoneModelVisible(false)}
     >
       <View style={styles.modalOverlay}>
         <View style={styles.modalContainer}>
           <View style={styles.topBar}></View>
-          <Text style={styles.modalTitle}>Delete this task?</Text>
+          <Text style={styles.modalTitle}>Did you Complete this task?</Text>
 
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               style={[styles.button, styles.yesButton]}
-              onPress={handleDelete}
+              onPress={() => {doneTask(id)}}
             >
               <Text style={styles.buttonText}>Yes</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
               style={[styles.button, styles.noButton]}
-              onPress={() => setDeleteModelVisible(false)}
+              onPress={() => {setDoneModelVisible(false)
+                setToggleCheckBox(false)
+              }}
             >
               <Text style={styles.buttonText}>No</Text>
             </TouchableOpacity>
@@ -101,4 +103,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DeleteConfirmation;
+export default DoneConfirmation;

@@ -1,13 +1,28 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import React, { createContext, useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Alert, Image } from 'react-native';
 import ItemTools from './ItemTools.component';
-import { ListItemProps } from '../types/Types';
+import { doneContextType, ListItemProps } from '../types/Types';
+import CheckBox from '@react-native-community/checkbox';
+import { useTasksStore } from '../store/Store';
+import DoneConfirmation from './DoneConfirmation.component';
 
-const ListItem = ({ item, confirmDelete }:ListItemProps) => {
+export const doneContext = createContext<doneContextType | null>(null);
+
+const ListItem = ({ item }: ListItemProps) => {
+
+
+  const [toggleCheckBox, setToggleCheckBox] = useState(false)
+
+  const taskDone = (newValue: boolean) => {
+    setToggleCheckBox(newValue)
+    setDoneModelVisible(true)
+  }
+
+  const [doneModelVisible, setDoneModelVisible] = useState<boolean>(false);
 
   const [toolSetId, setToolSetId] = useState<number | null>(null);
 
-  const showToolset = (id:number) => {
+  const showToolset = (id: number) => {
     if (toolSetId == id) {
       setToolSetId(null)
       return
@@ -18,23 +33,30 @@ const ListItem = ({ item, confirmDelete }:ListItemProps) => {
   return (
     <>
       <View style={styles.taskContainer}>
-        <TouchableOpacity onPress={() => showToolset(item.id)}>
-          <View style={styles.taskContent}>
+        <View style={styles.taskContent}>
+          <TouchableOpacity onPress={() => showToolset(item.id)}>
             <Text style={styles.taskTitle}>{item.title}</Text>
             <Text style={styles.taskDescription}>{item.description}</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.deleteButton}
-          onPress={() => confirmDelete(item.id)}
-        >
-          <Text style={styles.deleteButtonText}>×</Text>
-        </TouchableOpacity>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.CheckBoxContainer}>
+          <CheckBox
+            value={toggleCheckBox}
+            onValueChange={(newValue) => taskDone(newValue)}
+            tintColors={{ true: '#FF8303', false: '#FF8303' }}
+            boxType='square'
+            onAnimationType='flat'
+          />
+        </View>
       </View>
       {toolSetId == item.id ?
         <ItemTools item={item}></ItemTools>
         :
         null}
+
+      <doneContext.Provider value={{ doneModelVisible, setDoneModelVisible ,toggleCheckBox,setToggleCheckBox}}>
+        <DoneConfirmation id={item.id}/>
+      </doneContext.Provider>
     </>
   );
 };
@@ -44,26 +66,30 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#1E1E1E',
+    backgroundColor: '#242320',
     borderRadius: 5,
-    borderWidth: 1,
-    borderColor: '#FF8303',
+    borderWidth: 2,
+    borderColor: '#A35709',
     overflow: 'hidden',
     marginBottom: 10,
-    maxHeight: 72,
-    padding: 16,
+    maxHeight: 65,
+    padding: 9,
+    paddingLeft: 16,
+    paddingRight: 16,
   },
   taskContent: {
     flex: 1,
   },
+  CheckBoxContainer: {
+    marginLeft: 10,
+  },
   taskTitle: {
-    color: '#f0e3ca',
+    color: '#F0E3CA',
     fontWeight: '400',
-    fontSize: 24,
-    marginBottom: 4,
+    fontSize: 20,
   },
   taskDescription: {
-    color: '#f0e3ca',
+    color: '#F0E3CA',
     fontSize: 14,
     fontWeight: '400',
   },
@@ -76,11 +102,11 @@ const styles = StyleSheet.create({
     borderColor: '#FF8303',
     borderRadius: 5,
   },
-  deleteButtonText: {
-    color: '#FF8303',
-    fontSize: 24,
-    fontWeight: 'bold',
-  },
+  deleteButtonImage: {
+    height: 11,
+    width: 11,
+    transform: [{ rotate: '45deg' }],
+  }
 });
 
 export default ListItem;
