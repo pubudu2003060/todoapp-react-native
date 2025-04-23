@@ -7,10 +7,11 @@ import DeleteConfirmation from '../components/DeleteConfirmation.component';
 import { Task } from '../types/Types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useTasksStore, useTaskStore } from '../store/Store';
+import Input from '../components/Input.Component';
 
 function Home() {
 
-    const { task, addData, removeData } = useTaskStore(state => state)
+    const { task, addData,  } = useTaskStore(state => state)
 
     const { taskList, taskToDelete, setTaskList, addTask, editTask } = useTasksStore(state => state)
 
@@ -55,27 +56,7 @@ function Home() {
                 hidden={false}
             />
             <View style={styles.mainContainer}>
-                <View style={styles.inputContainer}>
-                    <View style={styles.inputFields}>
-                        <TextInput
-                            placeholder="Title..."
-                            placeholderTextColor="#F0E3CA"
-                            value={task.title}
-                            onChangeText={(text) => addData('title', text)}
-                            style={styles.textInput}
-                        />
-                        <TextInput
-                            placeholder="About..."
-                            placeholderTextColor="#F0E3CA"
-                            value={task.description}
-                            onChangeText={(text) => addData('description', text)}
-                            style={styles.textInput}
-                        />
-                    </View>
-                    <TouchableOpacity style={styles.addButton} onPress={addTask}>
-                        <Image style={styles.addButtonImage} source={require('../assets/add.png')}></Image>
-                    </TouchableOpacity>
-                </View>
+               <Input></Input>
                 {taskList.length > 0 ?
                     <ScrollView>
                         {taskList.map((item) => (

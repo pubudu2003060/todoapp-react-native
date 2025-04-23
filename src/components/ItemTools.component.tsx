@@ -1,6 +1,6 @@
 import React, { createContext, useState } from 'react'
 import { Image, StyleSheet, Text, TouchableOpacity, View, Share } from 'react-native'
-import EditItem from './EditItem.component';
+import EditItem from './EditItem.Component';
 import { deleteContextType, ItemToolsProps, Task } from '../types/Types';
 import { useTasksStore } from '../store/Store';
 import DeleteConfirmation from './DeleteConfirmation.component';
@@ -44,15 +44,9 @@ const ItemTools = ({ item }: ItemToolsProps) => {
             style={styles.toolIcon}
           />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.toolButton} >
-          <Image
-            source={require('../assets/info.png')}
-            style={styles.toolIcon}
-          />
-        </TouchableOpacity>
         <TouchableOpacity style={styles.toolButton} onPress={() => { setModalVisible(true) }} >
           <Image
-            source={require('../assets/edit.png')}
+            source={require('../assets/info.png')}
             style={styles.toolIcon}
           />
         </TouchableOpacity>
