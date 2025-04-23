@@ -1,18 +1,16 @@
 import React, { use, useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Alert } from 'react-native';
 import LottieView from 'lottie-react-native';
+import { useFocusEffect } from '@react-navigation/native';
 
 export default function LoadingScreen({navigation}: any) {
 
-
-    useEffect(() => {
+    useFocusEffect(() => {
         const timer = setTimeout(() => {
             navigation.navigate('Home');
         }, 3000);
         return () => clearTimeout(timer);
-    }, [])
-
-
+    })
 
     return (
         <View style={styles.container}>
