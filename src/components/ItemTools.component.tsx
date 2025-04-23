@@ -1,6 +1,6 @@
 import React, { createContext, useState } from 'react'
 import { Image, StyleSheet, Text, TouchableOpacity, View, Share } from 'react-native'
-import EditItem from './EditItem.component';
+import EditItem from './EditItem.Component';
 import { deleteContextType, ItemToolsProps, Task } from '../types/Types';
 import { useTasksStore } from '../store/Store';
 import DeleteConfirmation from './DeleteConfirmation.component';
