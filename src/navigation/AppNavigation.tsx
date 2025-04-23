@@ -10,9 +10,21 @@ const AppNavigation = () => {
     return (
         <Stack.Navigator>
             <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false, }} />
-            <Stack.Screen name="Home" component={Home}  />
+            <Stack.Screen name="Home" component={Home} options={{
+                title: 'Todo',
+                headerTitleAlign: 'center',
+                headerStyle: {
+                    backgroundColor: '#1B1A17',
+                },
+                headerTintColor: '#F0E3CA',
+                headerTitleStyle: {
+                    fontSize: 20,
+                },
+                animation: 'slide_from_right',
+                headerBackVisible: false,
+                headerLeft:undefined
+            }} />
         </Stack.Navigator>
-
     )
 }
 

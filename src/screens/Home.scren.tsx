@@ -47,7 +47,7 @@ function Home() {
 
 
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView style={{ flex: 1,backgroundColor: '#1B1A17', padding:0,margin:0 }}>
             <StatusBar
                 backgroundColor="#1B1A17"
                 barStyle="light-content"
@@ -77,6 +77,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#1B1A17',
         minHeight: '100%',
         padding: 16,
+        top: 0,
     },
     inputContainer: {
         flexDirection: 'row',
