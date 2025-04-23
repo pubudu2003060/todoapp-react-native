@@ -44,15 +44,9 @@ const ItemTools = ({ item }: ItemToolsProps) => {
             style={styles.toolIcon}
           />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.toolButton} >
-          <Image
-            source={require('../assets/info.png')}
-            style={styles.toolIcon}
-          />
-        </TouchableOpacity>
         <TouchableOpacity style={styles.toolButton} onPress={() => { setModalVisible(true) }} >
           <Image
-            source={require('../assets/edit.png')}
+            source={require('../assets/info.png')}
             style={styles.toolIcon}
           />
         </TouchableOpacity>
