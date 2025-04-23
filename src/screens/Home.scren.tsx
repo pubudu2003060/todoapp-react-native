@@ -3,7 +3,6 @@ import { View, TextInput, StyleSheet, TouchableOpacity, ScrollView, StatusBar, I
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ListItem from '../components/ListItem.component';
 import NoTasks from '../components/NoTasks.component';
-import DeleteConfirmation from '../components/DeleteConfirmation.component';
 import { Task } from '../types/Types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useTasksStore, useTaskStore } from '../store/Store';
