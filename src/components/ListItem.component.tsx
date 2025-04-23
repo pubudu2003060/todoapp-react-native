@@ -1,13 +1,24 @@
-import React, { useState } from 'react';
+import React, { createContext, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Alert, Image } from 'react-native';
 import ItemTools from './ItemTools.component';
-import { ListItemProps } from '../types/Types';
-import { useTasksStore } from '../store/Store';
+import { doneContextType, ListItemProps } from '../types/Types';
 import CheckBox from '@react-native-community/checkbox';
+import { useTasksStore } from '../store/Store';
+import DoneConfirmation from './DoneConfirmation.component';
+
+export const doneContext = createContext<doneContextType | null>(null);
 
 const ListItem = ({ item }: ListItemProps) => {
 
+
   const [toggleCheckBox, setToggleCheckBox] = useState(false)
+
+  const taskDone = (newValue: boolean) => {
+    setToggleCheckBox(newValue)
+    setDoneModelVisible(true)
+  }
+
+  const [doneModelVisible, setDoneModelVisible] = useState<boolean>(false);
 
   const [toolSetId, setToolSetId] = useState<number | null>(null);
 
@@ -28,12 +39,13 @@ const ListItem = ({ item }: ListItemProps) => {
             <Text style={styles.taskDescription}>{item.description}</Text>
           </TouchableOpacity>
         </View>
-        <View>
-
+        <View style={styles.CheckBoxContainer}>
           <CheckBox
-            disabled={false}
             value={toggleCheckBox}
-            onValueChange={(newValue) => setToggleCheckBox(newValue)}
+            onValueChange={(newValue) => taskDone(newValue)}
+            tintColors={{ true: '#FF8303', false: '#FF8303' }}
+            boxType='square'
+            onAnimationType='flat'
           />
         </View>
       </View>
@@ -41,6 +53,10 @@ const ListItem = ({ item }: ListItemProps) => {
         <ItemTools item={item}></ItemTools>
         :
         null}
+
+      <doneContext.Provider value={{ doneModelVisible, setDoneModelVisible ,toggleCheckBox,setToggleCheckBox}}>
+        <DoneConfirmation id={item.id}/>
+      </doneContext.Provider>
     </>
   );
 };
@@ -63,6 +79,9 @@ const styles = StyleSheet.create({
   },
   taskContent: {
     flex: 1,
+  },
+  CheckBoxContainer: {
+    marginLeft: 10,
   },
   taskTitle: {
     color: '#F0E3CA',

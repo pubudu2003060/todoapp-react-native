@@ -1,13 +1,15 @@
-import React, { useState } from 'react'
+import React, { createContext, useState } from 'react'
 import { Image, StyleSheet, Text, TouchableOpacity, View, Share } from 'react-native'
 import EditItem from './EditItem.component';
-import { ItemToolsProps, Task } from '../types/Types';
+import { deleteContextType, ItemToolsProps, Task } from '../types/Types';
 import { useTasksStore } from '../store/Store';
+import DeleteConfirmation from './DeleteConfirmation.component';
 
+export const deleteContext = createContext<deleteContextType | null>(null);
 
 const ItemTools = ({ item }: ItemToolsProps) => {
 
-     const { confirmDelete } = useTasksStore(state => state)
+  const { confirmDelete } = useTasksStore(state => state)
 
   const onShare = async () => {
     try {
@@ -24,13 +26,14 @@ const ItemTools = ({ item }: ItemToolsProps) => {
       } else if (result.action === Share.dismissedAction) {
         console.log('Share dismissed');
       }
-    } catch (error:any) {
+    } catch (error: any) {
       console.error('Error sharing item:', error.message);
     }
   };
 
-
   const [modalVisible, setModalVisible] = useState<boolean>(false);
+
+  const [deleteModelVisible, setDeleteModelVisible] = useState<boolean>(false);
 
   return (
     <>
@@ -53,7 +56,10 @@ const ItemTools = ({ item }: ItemToolsProps) => {
             style={styles.toolIcon}
           />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.toolButton} onPress={() => confirmDelete(item.id)}>
+        <TouchableOpacity style={styles.toolButton} onPress={() => {
+          confirmDelete(item.id)
+          setDeleteModelVisible(true)
+        }}>
           <Image
             source={require('../assets/add.png')}
             style={[styles.toolIcon, styles.deleteButtonImage]}
@@ -65,6 +71,10 @@ const ItemTools = ({ item }: ItemToolsProps) => {
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
         item={item}></EditItem>
+
+      <deleteContext.Provider value={{ deleteModelVisible, setDeleteModelVisible }}>
+        <DeleteConfirmation />
+      </deleteContext.Provider>
     </>
 
   )
@@ -94,10 +104,10 @@ const styles = StyleSheet.create({
     height: 18,
     tintColor: '#FFFFFF',
   },
-  deleteButtonImage:{
+  deleteButtonImage: {
     transform: [{ rotate: '45deg' }],
   }
-  
+
 });
 
 export default ItemTools

@@ -24,10 +24,6 @@ export type EditItemProps = {
     item: Task;
 }
 
-export type UserContextType = {
-    editTask: (itemId: number, newValue: object) => void
-};
-
 export type taskStore = {
     task: Task,
     addData: (key: string, value: string) => void,
@@ -36,12 +32,23 @@ export type taskStore = {
 
 export type tasksStore = {
     taskList: Task[],
-    modalVisible: boolean,
     taskToDelete: number | null,
     setTaskList:(initialTaskList:Task[]) => void,
     addTask: () => void,
     editTask: (itemId: number, newValue: object) => void,
     confirmDelete: (id: number) => void,
     handleDelete: () => void,
-    closeModel:() => void
+    doneTask:(id:number) => void,
+}
+
+export type  deleteContextType = {
+    deleteModelVisible: boolean;
+    setDeleteModelVisible: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export type  doneContextType = {
+    doneModelVisible: boolean;
+    setDoneModelVisible: React.Dispatch<React.SetStateAction<boolean>>;
+    toggleCheckBox: boolean;
+    setToggleCheckBox: React.Dispatch<React.SetStateAction<boolean>>;
 }

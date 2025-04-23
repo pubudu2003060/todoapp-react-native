@@ -1,15 +1,15 @@
 import React, { createContext, useEffect, useState } from 'react';
-import { View, Text, TextInput, StyleSheet, Button, TouchableOpacity, ScrollView, StatusBar, Image } from 'react-native';
+import { View, TextInput, StyleSheet, TouchableOpacity, ScrollView, StatusBar, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ListItem from '../components/ListItem.component';
 import NoTasks from '../components/NoTasks.component';
 import DeleteConfirmation from '../components/DeleteConfirmation.component';
-import { Task, UserContextType } from '../types/Types';
+import { Task } from '../types/Types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useTasksStore, useTaskStore } from '../store/Store';
 
 function Home() {
-    
+
     const { task, addData, removeData } = useTaskStore(state => state)
 
     const { taskList, taskToDelete, setTaskList, addTask, editTask } = useTasksStore(state => state)
@@ -48,7 +48,11 @@ function Home() {
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <StatusBar
-                barStyle="dark-content"
+                backgroundColor="#1B1A17"
+                barStyle="light-content"
+                animated={true}
+                showHideTransition="fade"
+                hidden={false}
             />
             <View style={styles.mainContainer}>
                 <View style={styles.inputContainer}>
@@ -69,19 +73,19 @@ function Home() {
                         />
                     </View>
                     <TouchableOpacity style={styles.addButton} onPress={addTask}>
-                       <Image style={styles.addButtonImage} source={require('../assets/add.png')}></Image>
+                        <Image style={styles.addButtonImage} source={require('../assets/add.png')}></Image>
                     </TouchableOpacity>
                 </View>
                 {taskList.length > 0 ?
-                        <ScrollView>
-                            {taskList.map((item) => (
-                                <ListItem key={item.id} item={item} />
-                            ))}
-                        </ScrollView>
+                    <ScrollView>
+                        {taskList.map((item) => (
+                            <ListItem key={item.id} item={item} />
+                        ))}
+                    </ScrollView>
                     :
                     <NoTasks></NoTasks>
                 }
-                <DeleteConfirmation/>
+
             </View>
         </SafeAreaView >
     );
@@ -102,7 +106,7 @@ const styles = StyleSheet.create({
     inputFields: {
         flex: 1,
         marginRight: 10,
-        gap:6
+        gap: 6
     },
     textInput: {
         borderWidth: 1,
@@ -112,6 +116,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#242320',
         color: '#F0E3CA',
         fontSize: 14,
+        height: 43,
     },
     addButton: {
         width: 91,
@@ -120,8 +125,8 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#FF8303',
         borderRadius: 5,
-        alignItems:'center',
-        justifyContent:'center'
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     addButtonImage: {
         width: 30,

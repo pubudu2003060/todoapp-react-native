@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { tasksStore, taskStore } from "../types/Types";
+import { Alert } from "react-native";
 
 export const useTaskStore = create<taskStore>((set) => ({
     task: {
@@ -27,7 +28,6 @@ export const useTaskStore = create<taskStore>((set) => ({
 
 export const useTasksStore = create<tasksStore>((set) => ({
     taskList: [],
-    modalVisible: false,
     taskToDelete: null,
     setTaskList: (initialTaskList) => {
         set((state) => ({
@@ -80,9 +80,19 @@ export const useTasksStore = create<tasksStore>((set) => ({
             }
         })
     },
-    closeModel:() => {
-        set((state) => ({
-            modalVisible:false
-        }))
-    }
+    doneTask: (id) => {
+        const { confirmDelete, handleDelete } = useTasksStore.getState();
+        set((state) => {
+            const newList = [...state.taskList];
+            const itemIndex = newList.findIndex((item) => item.id === id);
+            if (itemIndex < 0) return state;
+            newList[itemIndex] = {
+                ...newList[itemIndex],
+                completed: !newList[itemIndex].completed,
+            };
+            return { taskList: newList };
+        });
+        confirmDelete(id);
+        handleDelete();
+    },
 }))
