@@ -27,7 +27,7 @@ A simple, clean, and efficient mobile To-Do list application built using **React
 ## 📦 Installation
 
 ```bash
-git clone https://github.com/your-username/todo-app-react-native.git
+git clone https://github.com/pubudu2003060/todoapp-react-native.git
 cd todo-app-react-native
 npm install
 npx pod-install # (only for iOS)
@@ -55,7 +55,7 @@ npx react-native run-ios
 
 ## 🧪 Demo
 
-📽️ Demo Video: `./src/assets/demo/demo.mp4`
+![AndroidEmulator-Medium_Phone_API_35_55542025-04-2414-16-12-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/3c149d07-cd7c-4ecf-b231-ef3ef2307edb)
 
 ---
 
