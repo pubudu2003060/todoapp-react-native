@@ -62,7 +62,6 @@ export const useTasksStore = create<tasksStore>((set) => ({
     confirmDelete: (id) => {
         set((state) => ({
             taskToDelete: id,
-            modalVisible: true,
         }))
     },
     handleDelete: () => {
@@ -72,12 +71,9 @@ export const useTasksStore = create<tasksStore>((set) => ({
                 return {
                     taskList: newList,
                     taskToDelete: null,
-                    modalVisible: false
                 }
             }
-            return {
-                modalVisible: false
-            }
+            return state;
         })
     },
     doneTask: (id) => {
@@ -92,7 +88,6 @@ export const useTasksStore = create<tasksStore>((set) => ({
             };
             return { taskList: newList };
         });
-        confirmDelete(id);
-        handleDelete();
+
     },
 }))
