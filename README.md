@@ -53,12 +53,6 @@ npx react-native run-ios
 
 ---
 
-## 🧪 Demo
-
-![AndroidEmulator-Medium_Phone_API_35_55542025-04-2414-16-12-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/3c149d07-cd7c-4ecf-b231-ef3ef2307edb)
-
----
-
 ## 🎨 Design Reference
 
 This project is based on the Figma design below. The UI closely follows this layout:
