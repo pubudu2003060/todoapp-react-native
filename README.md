@@ -1,7 +1,3 @@
-Here’s a cleaned-up and corrected version of your `README.md`. I’ve adjusted formatting issues, fixed Markdown syntax, and added clarity while preserving your style and tone.
-
----
-
 # 📝 React Native To-Do List App
 
 A simple, clean, and efficient mobile To-Do list application built using **React Native CLI**, **TypeScript**, and **Zustand** for state management. This app allows users to add, delete, and mark tasks as complete, with optional local storage using **AsyncStorage** for persistence.
@@ -69,6 +65,3 @@ This project is based on the Figma design below. The UI closely follows this lay
 
 🔗 [Figma Design](https://www.figma.com/design/HCZyEIWzvyEla3P5cV4Fk5/todo-app-react-native?node-id=0-1&p=f&t=cXxkpfgVc7vOcv0d-0)
 
----
-
-Let me know if you want to add badges, screenshots, or improve the contribution section. Want help writing a `CONTRIBUTING.md` file too? 😄
