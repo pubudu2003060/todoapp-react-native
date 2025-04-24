@@ -1,99 +1,74 @@
+Here’s a cleaned-up and corrected version of your `README.md`. I’ve adjusted formatting issues, fixed Markdown syntax, and added clarity while preserving your style and tone.
 
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+---
 
-# Getting Started
+# 📝 React Native To-Do List App
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+A simple, clean, and efficient mobile To-Do list application built using **React Native CLI**, **TypeScript**, and **Zustand** for state management. This app allows users to add, delete, and mark tasks as complete, with optional local storage using **AsyncStorage** for persistence.
 
-## Step 1: Start Metro
+---
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+## 📱 Features
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+- ➕ Add new tasks with a text input
+- ✅ Mark tasks as complete (using checkboxes)
+- 🗑️ Delete tasks from the list
+- 💾 **Bonus:** Persistent local storage using AsyncStorage
+- 💅 Modern Material Design-inspired UI with custom styling
 
-```sh
-# Using npm
-npm start
+---
 
-# OR using Yarn
-yarn start
+## 🛠️ Tech Stack
+
+- **React Native CLI** (with TypeScript)
+- **Zustand** (state management)
+- **AsyncStorage** (optional data persistence)
+- **StyleSheet** (custom styling)
+- **react-native-vector-icons** (for icons)
+
+---
+
+## 📦 Installation
+
+```bash
+git clone https://github.com/your-username/todo-app-react-native.git
+cd todo-app-react-native
+npm install
+npx pod-install # (only for iOS)
 ```
 
-## Step 2: Build and run your app
+---
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+## 🚀 Running the App
 
 ### Android
 
-```sh
-# Using npm
-npm run android
-
-# OR using Yarn
-yarn android
+```bash
+npx react-native run-android
 ```
 
 ### iOS
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
-```sh
-bundle install
+```bash
+npx react-native run-ios
 ```
 
-Then, and every time you update your native dependencies, run:
+> 📱 Make sure your emulator or connected device is running.
 
-```sh
-bundle exec pod install
-```
+---
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+## 🧪 Demo
 
-```sh
-# Using npm
-npm run ios
+📽️ Demo Video: `./src/assets/demo/demo.mp4`
 
-# OR using Yarn
-yarn ios
-```
+---
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+## 🎨 Design Reference
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+This project is based on the Figma design below. The UI closely follows this layout:
 
-## Step 3: Modify your app
+🔗 [Figma Design](https://www.figma.com/design/HCZyEIWzvyEla3P5cV4Fk5/todo-app-react-native?node-id=0-1&p=f&t=cXxkpfgVc7vOcv0d-0)
 
-Now that you have successfully run the app, let's make changes!
+---
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
-
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
-
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
-
+Let me know if you want to add badges, screenshots, or improve the contribution section. Want help writing a `CONTRIBUTING.md` file too? 😄
