@@ -11,7 +11,7 @@ export const doneContext = createContext<doneContextType | null>(null);
 const ListItem = ({ item }: ListItemProps) => {
 
 
-  const [toggleCheckBox, setToggleCheckBox] = useState(false)
+  const [toggleCheckBox, setToggleCheckBox] = useState(item.completed)
 
   const taskDone = (newValue: boolean) => {
     setToggleCheckBox(newValue)

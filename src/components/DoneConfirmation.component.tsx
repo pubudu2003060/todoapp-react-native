@@ -4,12 +4,12 @@ import { useTasksStore } from '../store/Store';
 import { deleteContextType, doneContextType } from '../types/Types';
 import { doneContext } from './ListItem.component';
 
-const DoneConfirmation = ({id}:{ id: number }) => {
+const DoneConfirmation = ({ id }: { id: number }) => {
 
   const { doneTask } = useTasksStore(state => state)
 
-  const {doneModelVisible, setDoneModelVisible,toggleCheckBox,setToggleCheckBox} = useContext(doneContext) as doneContextType
-  
+  const { doneModelVisible, setDoneModelVisible, toggleCheckBox, setToggleCheckBox } = useContext(doneContext) as doneContextType
+
   return (
     <Modal
       transparent={true}
@@ -25,14 +25,18 @@ const DoneConfirmation = ({id}:{ id: number }) => {
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               style={[styles.button, styles.yesButton]}
-              onPress={() => {doneTask(id)}}
+              onPress={() => {
+                doneTask(id)
+                setDoneModelVisible(false)
+              }}
             >
               <Text style={styles.buttonText}>Yes</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
               style={[styles.button, styles.noButton]}
-              onPress={() => {setDoneModelVisible(false)
+              onPress={() => {
+                setDoneModelVisible(false)
                 setToggleCheckBox(false)
               }}
             >
@@ -61,7 +65,7 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     alignItems: 'center',
   },
-  topBar:{
+  topBar: {
     width: 273,
     height: 4,
     backgroundColor: '#A35709',

@@ -8,8 +8,8 @@ const DeleteConfirmation = () => {
 
   const { handleDelete } = useTasksStore(state => state)
 
-  const {deleteModelVisible, setDeleteModelVisible} = useContext(deleteContext) as deleteContextType
-  
+  const { deleteModelVisible, setDeleteModelVisible } = useContext(deleteContext) as deleteContextType
+
   return (
     <Modal
       transparent={true}
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     alignItems: 'center',
   },
-  topBar:{
+  topBar: {
     width: 273,
     height: 4,
     backgroundColor: '#A35709',
