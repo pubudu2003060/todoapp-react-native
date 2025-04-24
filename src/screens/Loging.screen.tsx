@@ -7,7 +7,7 @@ export default function LoadingScreen({ navigation }: any) {
 
     useFocusEffect(() => {
         const timer = setTimeout(() => {
-            navigation.navigate('Home');
+           navigation.navigate('Home');
         }, 3000);
         return () => clearTimeout(timer);
     })

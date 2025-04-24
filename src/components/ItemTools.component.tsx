@@ -44,12 +44,13 @@ const ItemTools = ({ item }: ItemToolsProps) => {
             style={styles.toolIcon}
           />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.toolButton} onPress={() => { setModalVisible(true) }} >
+        {!item.completed && <TouchableOpacity style={styles.toolButton} onPress={() => { setModalVisible(true) }} >
           <Image
             source={require('../assets/info.png')}
             style={styles.toolIcon}
           />
-        </TouchableOpacity>
+        </TouchableOpacity>}
+
         <TouchableOpacity style={styles.toolButton} onPress={() => {
           confirmDelete(item.id)
           setDeleteModelVisible(true)

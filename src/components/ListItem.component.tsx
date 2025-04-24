@@ -40,13 +40,13 @@ const ListItem = ({ item }: ListItemProps) => {
           </TouchableOpacity>
         </View>
         <View style={styles.CheckBoxContainer}>
-          <CheckBox
+          {!item.completed && <CheckBox
             value={toggleCheckBox}
             onValueChange={(newValue) => taskDone(newValue)}
             tintColors={{ true: '#FF8303', false: '#FF8303' }}
             boxType='square'
             onAnimationType='flat'
-          />
+          />}
         </View>
       </View>
       {toolSetId == item.id ?
@@ -54,8 +54,8 @@ const ListItem = ({ item }: ListItemProps) => {
         :
         null}
 
-      <doneContext.Provider value={{ doneModelVisible, setDoneModelVisible ,toggleCheckBox,setToggleCheckBox}}>
-        <DoneConfirmation id={item.id}/>
+      <doneContext.Provider value={{ doneModelVisible, setDoneModelVisible, toggleCheckBox, setToggleCheckBox }}>
+        <DoneConfirmation id={item.id} />
       </doneContext.Provider>
     </>
   );

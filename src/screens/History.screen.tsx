@@ -11,7 +11,7 @@ function History({ navigation }: any) {
 
     useEffect(() => {
         const onBackPress = () => {
-            navigation.navigate('Home');
+            navigation.goBack()
             return true;
         };
         const backHandler = BackHandler.addEventListener(
