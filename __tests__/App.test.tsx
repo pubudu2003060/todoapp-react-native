@@ -15,11 +15,12 @@ jest.mock('../src/navigation/AppNavigation', () => {
 
 test('renders correctly', async () => {
   let tree;
-  await ReactTestRenderer.act(async () => { // Make the act callback async if there are async operations
+  await ReactTestRenderer.act(async () => {
+    // Make the act callback async if there are async operations
     tree = ReactTestRenderer.create(<App />);
   });
   expect(tree).toBeDefined();
   // Optionally, check if the mock navigation is rendered
   const root = tree.root;
-  expect(root.findByProps({testID: "mock-app-navigation"})).toBeTruthy();
+  expect(root.findByProps({testID: 'mock-app-navigation'})).toBeTruthy();
 });

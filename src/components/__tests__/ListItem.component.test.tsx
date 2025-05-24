@@ -1,13 +1,12 @@
 import React from 'react';
-import { render } from '@testing-library/react-native';
+import {render} from '@testing-library/react-native';
 import ListItem from '../ListItem.component';
-import { Task } from '../../types/Types';
+import {Task} from '../../types/Types';
 
 // Mock child components and context providers to isolate ListItem
 jest.mock('../ItemTools.component', () => () => <></>); // Mock ItemTools
 jest.mock('../DoneConfirmation.component', () => () => <></>); // Mock DoneConfirmation
 jest.mock('@react-native-community/checkbox', () => 'CheckBox');
-
 
 // Mocking the context
 const mockDoneContext = {
@@ -35,8 +34,9 @@ describe('ListItem component', () => {
   };
 
   it('renders correctly with an incomplete task', () => {
-    const { getByText, queryByTestId } = render( // queryByTestId for checkbox which might not be there
-      <ListItem item={mockTask} />
+    const {getByText, queryByTestId} = render(
+      // queryByTestId for checkbox which might not be there
+      <ListItem item={mockTask} />,
     );
 
     expect(getByText(mockTask.title)).toBeTruthy();
@@ -49,8 +49,8 @@ describe('ListItem component', () => {
   });
 
   it('renders correctly with a completed task (hides checkbox)', () => {
-    const { getByText, queryByTestId } = render(
-      <ListItem item={mockTaskCompleted} />
+    const {getByText, queryByTestId} = render(
+      <ListItem item={mockTaskCompleted} />,
     );
 
     expect(getByText(mockTaskCompleted.title)).toBeTruthy();
@@ -61,17 +61,16 @@ describe('ListItem component', () => {
   });
 
   it('displays correct priority', () => {
-    const lowPriorityTask: Task = { ...mockTask, priority: 'low', id: 3 };
-    const highPriorityTask: Task = { ...mockTask, priority: 'high', id: 4 };
-    const noPriorityTask: Task = { ...mockTask, priority: undefined, id: 5 };
+    const lowPriorityTask: Task = {...mockTask, priority: 'low', id: 3};
+    const highPriorityTask: Task = {...mockTask, priority: 'high', id: 4};
+    const noPriorityTask: Task = {...mockTask, priority: undefined, id: 5};
 
-
-    const { getByText, rerender } = render(<ListItem item={lowPriorityTask} />);
+    const {getByText, rerender} = render(<ListItem item={lowPriorityTask} />);
     expect(getByText('Priority: Low')).toBeTruthy();
 
     rerender(<ListItem item={highPriorityTask} />);
     expect(getByText('Priority: High')).toBeTruthy();
-    
+
     rerender(<ListItem item={noPriorityTask} />);
     expect(getByText('Priority: Medium')).toBeTruthy(); // Default
   });

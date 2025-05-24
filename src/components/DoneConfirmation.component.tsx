@@ -1,22 +1,22 @@
-import React, { useContext } from 'react';
-import { View, Text, TouchableOpacity, Modal, StyleSheet } from 'react-native';
-import { useTasksStore } from '../store/Store';
-import { doneContextType } from '../types/Types';
-import { doneContext } from './ListItem.component';
+import React, {useContext} from 'react';
+import {View, Text, TouchableOpacity, Modal, StyleSheet} from 'react-native';
+import {useTasksStore} from '../store/Store';
+import {doneContextType} from '../types/Types';
+import {doneContext} from './ListItem.component';
 
-const DoneConfirmation = ({ id }: { id: number }) => {
+const DoneConfirmation = ({id}: {id: number}) => {
+  const {doneTask} = useTasksStore(state => state);
 
-  const { doneTask } = useTasksStore(state => state);
-
-  const { doneModelVisible, setDoneModelVisible, setToggleCheckBox } = useContext(doneContext) as doneContextType;
+  const {doneModelVisible, setDoneModelVisible} = useContext(
+    doneContext,
+  ) as doneContextType;
 
   return (
     <Modal
       transparent={true}
       visible={doneModelVisible}
       animationType="fade"
-      onRequestClose={() => setDoneModelVisible(false)}
-    >
+      onRequestClose={() => setDoneModelVisible(false)}>
       <View style={styles.modalOverlay}>
         <View style={styles.modalContainer}>
           <View style={styles.topBar} />
@@ -28,8 +28,7 @@ const DoneConfirmation = ({ id }: { id: number }) => {
               onPress={() => {
                 doneTask(id);
                 setDoneModelVisible(false);
-              }}
-            >
+              }}>
               <Text style={styles.buttonText}>Yes</Text>
             </TouchableOpacity>
 
@@ -37,9 +36,8 @@ const DoneConfirmation = ({ id }: { id: number }) => {
               style={[styles.button, styles.noButton]}
               onPress={() => {
                 setDoneModelVisible(false);
-                setToggleCheckBox(false);
-              }}
-            >
+                // setToggleCheckBox(false); // Removed as toggleCheckBox is no longer managed here
+              }}>
               <Text style={styles.buttonText}>No</Text>
             </TouchableOpacity>
           </View>

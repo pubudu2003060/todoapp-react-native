@@ -1,29 +1,28 @@
-import React, { createContext, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'; // Removed Alert, Image
+import React, {createContext, useState} from 'react';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native'; // Removed Alert, Image
 import ItemTools from './ItemTools.component';
-import { doneContextType, ListItemProps } from '../types/Types';
+import {doneContextType, ListItemProps} from '../types/Types';
 import CheckBox from '@react-native-community/checkbox';
 // import { useTasksStore } from '../store/Store'; // Removed useTasksStore
 import DoneConfirmation from './DoneConfirmation.component';
 
-export const doneContext = createContext<doneContextType | null>(null);
+export const doneContext = createContext<Omit<
+  doneContextType,
+  'toggleCheckBox' | 'setToggleCheckBox'
+> | null>(null);
 
-const ListItem = ({ item }: ListItemProps) => {
+const ListItem = ({item}: ListItemProps) => {
+  const [doneModelVisible, setDoneModelVisible] = useState<boolean>(false);
 
-
-  const [toggleCheckBox, setToggleCheckBox] = useState(item.completed);
-
-  const taskDone = (newValue: boolean) => {
-    setToggleCheckBox(newValue);
+  const handleCheckBoxPress = () => {
     setDoneModelVisible(true);
   };
-
-  const [doneModelVisible, setDoneModelVisible] = useState<boolean>(false);
 
   const [toolSetId, setToolSetId] = useState<number | null>(null);
 
   const showToolset = (id: number) => {
-    if (toolSetId === id) { // Changed == to ===
+    if (toolSetId === id) {
+      // Changed == to ===
       setToolSetId(null);
       return;
     }
@@ -37,25 +36,29 @@ const ListItem = ({ item }: ListItemProps) => {
           <TouchableOpacity onPress={() => showToolset(item.id)}>
             <Text style={styles.taskTitle}>{item.title}</Text>
             <Text style={styles.taskDescription}>{item.description}</Text>
-            <Text style={styles.taskPriority}>Priority: {item.priority ? item.priority.charAt(0).toUpperCase() + item.priority.slice(1) : 'Medium'}</Text>
+            <Text style={styles.taskPriority}>
+              Priority:{' '}
+              {item.priority
+                ? item.priority.charAt(0).toUpperCase() + item.priority.slice(1)
+                : 'Medium'}
+            </Text>
           </TouchableOpacity>
         </View>
         <View style={styles.CheckBoxContainer}>
-          {!item.completed && <CheckBox
-            value={toggleCheckBox}
-            onValueChange={(newValue) => taskDone(newValue)}
-            tintColors={{ true: '#FF8303', false: '#FF8303' }}
-            boxType="square"
-            onAnimationType="flat"
-          />}
+          {!item.completed && (
+            <CheckBox
+              value={item.completed} // Directly use item.completed
+              onValueChange={handleCheckBoxPress} // Call new handler
+              tintColors={{true: '#FF8303', false: '#FF8303'}}
+              boxType="square"
+              onAnimationType="flat"
+            />
+          )}
         </View>
       </View>
-      {toolSetId === item.id ? // Changed == to ===
-        <ItemTools item={item} />
-        :
-        null}
+      {toolSetId === item.id ? <ItemTools item={item} /> : null}
 
-      <doneContext.Provider value={{ doneModelVisible, setDoneModelVisible, toggleCheckBox, setToggleCheckBox }}>
+      <doneContext.Provider value={{doneModelVisible, setDoneModelVisible}}>
         <DoneConfirmation id={item.id} />
       </doneContext.Provider>
     </>
@@ -112,9 +115,8 @@ const styles = StyleSheet.create({
   deleteButtonImage: {
     height: 11,
     width: 11,
-    transform: [{ rotate: '45deg' }],
+    transform: [{rotate: '45deg'}],
   },
 });
 
 export default ListItem;
-

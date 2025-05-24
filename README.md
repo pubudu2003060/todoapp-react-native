@@ -12,8 +12,8 @@ A simple, clean, and efficient mobile To-Do list application built using **React
 - 🗑️ **Delete Tasks**: Remove tasks from the list with a confirmation step.
 - 🔥 **Set Task Priority**: Assign priority levels (Low, Medium, High) to tasks.
 - 📊 **Sort Tasks**: Organize tasks by:
-    - Priority (Low to High, High to Low)
-    - Creation Date (Oldest First, Newest First)
+  - Priority (Low to High, High to Low)
+  - Creation Date (Oldest First, Newest First)
 - 🔗 **Share Tasks**: Share task details (title and description) using the native share functionality.
 - 💾 **Persistent Local Storage**: Tasks are saved locally using AsyncStorage, so they persist across app sessions.
 - 💅 **Clean UI**: Modern, user-friendly interface.
@@ -41,7 +41,7 @@ A simple, clean, and efficient mobile To-Do list application built using **React
     ```
 2.  **Navigate to the project directory:**
     ```bash
-    cd todoapp-react-native 
+    cd todoapp-react-native
     ```
     (Note: The original README mentioned `todo-app-react-native`, ensure you use the correct directory name if it differs)
 3.  **Install dependencies:**
@@ -50,7 +50,7 @@ A simple, clean, and efficient mobile To-Do list application built using **React
     ```
 4.  **Install iOS pods (for iOS development):**
     ```bash
-    npx pod-install 
+    npx pod-install
     ```
     (or `cd ios && pod install && cd ..`)
 

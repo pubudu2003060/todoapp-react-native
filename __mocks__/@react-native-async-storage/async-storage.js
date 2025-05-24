@@ -25,10 +25,10 @@ export default {
       return Promise.resolve();
     }),
     mergeItem: jest.fn((key, value) => {
-        const oldValue = store[key] ? JSON.parse(store[key]) : {};
-        const newValue = JSON.parse(value);
-        store[key] = JSON.stringify({...oldValue, ...newValue});
-        return Promise.resolve();
+      const oldValue = store[key] ? JSON.parse(store[key]) : {};
+      const newValue = JSON.parse(value);
+      store[key] = JSON.stringify({...oldValue, ...newValue});
+      return Promise.resolve();
     }),
   })),
 };

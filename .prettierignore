@@ -1,0 +1,2 @@
+# Ignore mock files that may use CommonJS syntax
+__mocks__/@react-native-async-storage/async-storage.js

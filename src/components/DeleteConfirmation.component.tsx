@@ -1,22 +1,22 @@
-import React, { useContext } from 'react';
-import { View, Text, TouchableOpacity, Modal, StyleSheet } from 'react-native';
-import { useTasksStore } from '../store/Store';
-import { deleteContextType } from '../types/Types';
-import { deleteContext } from './ItemTools.component';
+import React, {useContext} from 'react';
+import {View, Text, TouchableOpacity, Modal, StyleSheet} from 'react-native';
+import {useTasksStore} from '../store/Store';
+import {deleteContextType} from '../types/Types';
+import {deleteContext} from './ItemTools.component';
 
 const DeleteConfirmation = () => {
+  const {handleDelete} = useTasksStore(state => state);
 
-  const { handleDelete } = useTasksStore(state => state);
-
-  const { deleteModelVisible, setDeleteModelVisible } = useContext(deleteContext) as deleteContextType;
+  const {deleteModelVisible, setDeleteModelVisible} = useContext(
+    deleteContext,
+  ) as deleteContextType;
 
   return (
     <Modal
       transparent={true}
       visible={deleteModelVisible}
       animationType="fade"
-      onRequestClose={() => setDeleteModelVisible(false)}
-    >
+      onRequestClose={() => setDeleteModelVisible(false)}>
       <View style={styles.modalOverlay}>
         <View style={styles.modalContainer}>
           <View style={styles.topBar} />
@@ -25,15 +25,13 @@ const DeleteConfirmation = () => {
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               style={[styles.button, styles.yesButton]}
-              onPress={handleDelete}
-            >
+              onPress={handleDelete}>
               <Text style={styles.buttonText}>Yes</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
               style={[styles.button, styles.noButton]}
-              onPress={() => setDeleteModelVisible(false)}
-            >
+              onPress={() => setDeleteModelVisible(false)}>
               <Text style={styles.buttonText}>No</Text>
             </TouchableOpacity>
           </View>

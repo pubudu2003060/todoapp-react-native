@@ -1,8 +1,8 @@
 import React from 'react';
-import { render, fireEvent, act } from '@testing-library/react-native'; // Added act
+import {render, fireEvent, act} from '@testing-library/react-native'; // Added act
 import Input from '../Input.Component';
-import { useTaskStore, useTasksStore } from '../../store/Store';
-import { Picker } from '@react-native-picker/picker';
+import {useTaskStore, useTasksStore} from '../../store/Store';
+import {Picker} from '@react-native-picker/picker';
 
 // Mock the Zustand stores
 jest.mock('../../store/Store', () => ({
@@ -13,9 +13,14 @@ jest.mock('../../store/Store', () => ({
 // Mock Picker
 jest.mock('@react-native-picker/picker', () => {
   const React = require('react');
-  const { View } = require('react-native'); // Import View for the mock
+  const {View} = require('react-native'); // Import View for the mock
   // A more controllable mock for Picker
-  const MockPicker = ({ selectedValue, onValueChange, children, ...props }: any) => {
+  const MockPicker = ({
+    selectedValue,
+    onValueChange,
+    children,
+    ...props
+  }: any) => {
     // Simulate a press/change event
     const handleChange = (value: string) => {
       if (onValueChange) {
@@ -23,16 +28,21 @@ jest.mock('@react-native-picker/picker', () => {
       }
     };
     return (
-      <View testID="mocked-picker" {...props} onValueChange={onValueChange} accessibilityState={{ selected: selectedValue }}>
+      <View
+        testID="mocked-picker"
+        {...props}
+        onValueChange={onValueChange}
+        accessibilityState={{selected: selectedValue}}>
         {/* Pass onValueChange to the View so it's available in props */}
       </View>
     );
   };
   // Mock Picker.Item to be a simple View or React.Fragment as its props are not crucial for these tests
-  MockPicker.Item = (props: any) => <View testID={`mocked-picker-item-${props.value}`} {...props} />;
-  return { Picker: MockPicker };
+  MockPicker.Item = (props: any) => (
+    <View testID={`mocked-picker-item-${props.value}`} {...props} />
+  );
+  return {Picker: MockPicker};
 });
-
 
 describe('Input component', () => {
   const mockAddData = jest.fn();
@@ -58,7 +68,7 @@ describe('Input component', () => {
   });
 
   it('renders correctly', () => {
-    const { getByPlaceholderText, getByTestId } = render(<Input />); // Assuming Picker has a testID or is identifiable
+    const {getByPlaceholderText, getByTestId} = render(<Input />); // Assuming Picker has a testID or is identifiable
 
     expect(getByPlaceholderText('Title...')).toBeTruthy();
     expect(getByPlaceholderText('About...')).toBeTruthy();
@@ -67,7 +77,7 @@ describe('Input component', () => {
   });
 
   it('calls addData when typing in title and description fields', () => {
-    const { getByPlaceholderText } = render(<Input />);
+    const {getByPlaceholderText} = render(<Input />);
     const titleInput = getByPlaceholderText('Title...');
     const descriptionInput = getByPlaceholderText('About...');
 
@@ -75,11 +85,14 @@ describe('Input component', () => {
     expect(mockAddData).toHaveBeenCalledWith('title', 'New Task Title');
 
     fireEvent.changeText(descriptionInput, 'New Task Description');
-    expect(mockAddData).toHaveBeenCalledWith('description', 'New Task Description');
+    expect(mockAddData).toHaveBeenCalledWith(
+      'description',
+      'New Task Description',
+    );
   });
 
   it('calls addData when changing priority', () => {
-    const { getByTestId } = render(<Input />);
+    const {getByTestId} = render(<Input />);
     const picker = getByTestId('mocked-picker'); // Use the testID from the mock
 
     // To simulate onValueChange, we'd typically interact with a child component or prop.
@@ -93,19 +106,19 @@ describe('Input component', () => {
     // For this test, let's assume the onValueChange is correctly passed to the mocked Picker
     // and would be triggered by a user interaction. We can't directly fireEvent on onValueChange.
     // We'll manually trigger the prop call as if the Picker did it.
-    
+
     // Get the onValueChange prop from the mocked Picker instance
     // This is a bit of a workaround for testing the prop directly.
     const pickerInstance = getByTestId('mocked-picker');
     act(() => {
-        pickerInstance.props.onValueChange('high');
+      pickerInstance.props.onValueChange('high');
     });
-    
+
     expect(mockAddData).toHaveBeenCalledWith('priority', 'high');
   });
 
   it('calls addTask when add button is pressed', () => {
-    const { getByTestId } = render(<Input />);
+    const {getByTestId} = render(<Input />);
     const addButton = getByTestId('addButton');
     fireEvent.press(addButton);
     expect(mockAddTask).toHaveBeenCalled();
