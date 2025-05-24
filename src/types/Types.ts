@@ -3,6 +3,7 @@ export type Task = {
     completed: boolean;
     description: string;
     id: number;
+    priority?: 'low' | 'medium' | 'high';
 };
 
 export type editTask = {

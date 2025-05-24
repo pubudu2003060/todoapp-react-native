@@ -1,14 +1,14 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { View, Text, TouchableOpacity, Modal, StyleSheet } from 'react-native';
 import { useTasksStore } from '../store/Store';
-import { deleteContextType, doneContextType } from '../types/Types';
+import { doneContextType } from '../types/Types';
 import { doneContext } from './ListItem.component';
 
 const DoneConfirmation = ({ id }: { id: number }) => {
 
-  const { doneTask } = useTasksStore(state => state)
+  const { doneTask } = useTasksStore(state => state);
 
-  const { doneModelVisible, setDoneModelVisible, toggleCheckBox, setToggleCheckBox } = useContext(doneContext) as doneContextType
+  const { doneModelVisible, setDoneModelVisible, setToggleCheckBox } = useContext(doneContext) as doneContextType;
 
   return (
     <Modal
@@ -19,15 +19,15 @@ const DoneConfirmation = ({ id }: { id: number }) => {
     >
       <View style={styles.modalOverlay}>
         <View style={styles.modalContainer}>
-          <View style={styles.topBar}></View>
+          <View style={styles.topBar} />
           <Text style={styles.modalTitle}>Did you Complete this task?</Text>
 
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               style={[styles.button, styles.yesButton]}
               onPress={() => {
-                doneTask(id)
-                setDoneModelVisible(false)
+                doneTask(id);
+                setDoneModelVisible(false);
               }}
             >
               <Text style={styles.buttonText}>Yes</Text>
@@ -36,8 +36,8 @@ const DoneConfirmation = ({ id }: { id: number }) => {
             <TouchableOpacity
               style={[styles.button, styles.noButton]}
               onPress={() => {
-                setDoneModelVisible(false)
-                setToggleCheckBox(false)
+                setDoneModelVisible(false);
+                setToggleCheckBox(false);
               }}
             >
               <Text style={styles.buttonText}>No</Text>

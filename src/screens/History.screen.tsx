@@ -1,17 +1,17 @@
-import React, { createContext, useEffect, useState } from 'react';
-import { View, TextInput, StyleSheet, TouchableOpacity, ScrollView, StatusBar, Image, BackHandler } from 'react-native';
+import React, { useEffect } from 'react'; // Removed createContext, useState
+import { View, StyleSheet, ScrollView, StatusBar, BackHandler } from 'react-native'; // Removed TextInput, TouchableOpacity, Image
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ListItem from '../components/ListItem.component';
 import NoTasks from '../components/NoTasks.component';
-import { useTasksStore, useTaskStore } from '../store/Store';
+import { useTasksStore } from '../store/Store'; // Removed useTaskStore
 
 function History({ navigation }: any) {
 
-    const { taskList } = useTasksStore(state => state)
+    const { taskList } = useTasksStore(state => state);
 
     useEffect(() => {
         const onBackPress = () => {
-            navigation.goBack()
+            navigation.goBack();
             return true;
         };
         const backHandler = BackHandler.addEventListener(
@@ -20,10 +20,10 @@ function History({ navigation }: any) {
         );
 
         return () => backHandler.remove();
-    }, []);
+    }, [navigation]); // Added navigation to dependency array
 
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: '#1B1A17' }}>
+        <SafeAreaView style={styles.safeArea}>
             <StatusBar
                 backgroundColor="#1B1A17"
                 barStyle="light-content"
@@ -54,7 +54,10 @@ const styles = StyleSheet.create({
         minHeight: '100%',
         padding: 16,
     },
-
-})
+    safeArea: {
+        flex: 1,
+        backgroundColor: '#1B1A17',
+    },
+});
 
 export default History;

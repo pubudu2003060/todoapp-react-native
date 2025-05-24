@@ -1,6 +1,7 @@
-import React, { createContext, useState } from 'react'
-import { Image, StyleSheet, Text, TouchableOpacity, View, Share } from 'react-native'
-import { deleteContextType, ItemToolsProps, Task } from '../types/Types';
+import React, { createContext, useState } from 'react';
+import { Image, StyleSheet, TouchableOpacity, View, Share } from 'react-native'; // Removed Text
+import Icon from 'react-native-vector-icons/Feather';
+import { deleteContextType, ItemToolsProps } from '../types/Types'; // Removed Task
 import { useTasksStore } from '../store/Store';
 import DeleteConfirmation from './DeleteConfirmation.component';
 import EditItem from './EditItem.component';
@@ -9,7 +10,7 @@ export const deleteContext = createContext<deleteContextType | null>(null);
 
 const ItemTools = ({ item }: ItemToolsProps) => {
 
-  const { confirmDelete } = useTasksStore(state => state)
+  const { confirmDelete } = useTasksStore(state => state);
 
   const onShare = async () => {
     try {
@@ -44,7 +45,7 @@ const ItemTools = ({ item }: ItemToolsProps) => {
             style={styles.toolIcon}
           />
         </TouchableOpacity>
-        {!item.completed && <TouchableOpacity style={styles.toolButton} onPress={() => { setModalVisible(true) }} >
+        {!item.completed && <TouchableOpacity style={styles.toolButton} onPress={() => { setModalVisible(true); }} >
           <Image
             source={require('../assets/info.png')}
             style={styles.toolIcon}
@@ -52,28 +53,25 @@ const ItemTools = ({ item }: ItemToolsProps) => {
         </TouchableOpacity>}
 
         <TouchableOpacity style={styles.toolButton} onPress={() => {
-          confirmDelete(item.id)
-          setDeleteModelVisible(true)
+          confirmDelete(item.id);
+          setDeleteModelVisible(true);
         }}>
-          <Image
-            source={require('../assets/add.png')}
-            style={[styles.toolIcon, styles.deleteButtonImage]}
-          />
+          <Icon name="trash-2" size={18} color="#FFFFFF" style={styles.toolIcon} />
         </TouchableOpacity>
       </View>
 
       <EditItem
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
-        item={item}></EditItem>
+        item={item} />
 
       <deleteContext.Provider value={{ deleteModelVisible, setDeleteModelVisible }}>
         <DeleteConfirmation />
       </deleteContext.Provider>
     </>
 
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   toolbarContainer: {
@@ -99,10 +97,7 @@ const styles = StyleSheet.create({
     height: 18,
     tintColor: '#FFFFFF',
   },
-  deleteButtonImage: {
-    transform: [{ rotate: '45deg' }],
-  }
-
+  // deleteButtonImage style is no longer needed
 });
 
-export default ItemTools
+export default ItemTools;

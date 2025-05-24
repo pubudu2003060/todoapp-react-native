@@ -1,9 +1,9 @@
 import React, { createContext, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Alert, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'; // Removed Alert, Image
 import ItemTools from './ItemTools.component';
 import { doneContextType, ListItemProps } from '../types/Types';
 import CheckBox from '@react-native-community/checkbox';
-import { useTasksStore } from '../store/Store';
+// import { useTasksStore } from '../store/Store'; // Removed useTasksStore
 import DoneConfirmation from './DoneConfirmation.component';
 
 export const doneContext = createContext<doneContextType | null>(null);
@@ -11,24 +11,24 @@ export const doneContext = createContext<doneContextType | null>(null);
 const ListItem = ({ item }: ListItemProps) => {
 
 
-  const [toggleCheckBox, setToggleCheckBox] = useState(item.completed)
+  const [toggleCheckBox, setToggleCheckBox] = useState(item.completed);
 
   const taskDone = (newValue: boolean) => {
-    setToggleCheckBox(newValue)
-    setDoneModelVisible(true)
-  }
+    setToggleCheckBox(newValue);
+    setDoneModelVisible(true);
+  };
 
   const [doneModelVisible, setDoneModelVisible] = useState<boolean>(false);
 
   const [toolSetId, setToolSetId] = useState<number | null>(null);
 
   const showToolset = (id: number) => {
-    if (toolSetId == id) {
-      setToolSetId(null)
-      return
+    if (toolSetId === id) { // Changed == to ===
+      setToolSetId(null);
+      return;
     }
-    setToolSetId(id)
-  }
+    setToolSetId(id);
+  };
 
   return (
     <>
@@ -37,6 +37,7 @@ const ListItem = ({ item }: ListItemProps) => {
           <TouchableOpacity onPress={() => showToolset(item.id)}>
             <Text style={styles.taskTitle}>{item.title}</Text>
             <Text style={styles.taskDescription}>{item.description}</Text>
+            <Text style={styles.taskPriority}>Priority: {item.priority ? item.priority.charAt(0).toUpperCase() + item.priority.slice(1) : 'Medium'}</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.CheckBoxContainer}>
@@ -44,13 +45,13 @@ const ListItem = ({ item }: ListItemProps) => {
             value={toggleCheckBox}
             onValueChange={(newValue) => taskDone(newValue)}
             tintColors={{ true: '#FF8303', false: '#FF8303' }}
-            boxType='square'
-            onAnimationType='flat'
+            boxType="square"
+            onAnimationType="flat"
           />}
         </View>
       </View>
-      {toolSetId == item.id ?
-        <ItemTools item={item}></ItemTools>
+      {toolSetId === item.id ? // Changed == to ===
+        <ItemTools item={item} />
         :
         null}
 
@@ -92,6 +93,12 @@ const styles = StyleSheet.create({
     color: '#F0E3CA',
     fontSize: 14,
     fontWeight: '400',
+    marginBottom: 4, // Add some margin below description
+  },
+  taskPriority: {
+    color: '#F0E3CA',
+    fontSize: 12,
+    fontStyle: 'italic',
   },
   deleteButton: {
     height: 32,
@@ -106,7 +113,7 @@ const styles = StyleSheet.create({
     height: 11,
     width: 11,
     transform: [{ rotate: '45deg' }],
-  }
+  },
 });
 
 export default ListItem;

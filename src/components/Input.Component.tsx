@@ -1,12 +1,13 @@
-import { Image, StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
-import { useTasksStore, useTaskStore } from "../store/Store";
+import { Image, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
+import { useTasksStore, useTaskStore } from '../store/Store';
+import { Picker } from '@react-native-picker/picker';
 
 
 const Input = () => {
 
-    const { task, addData } = useTaskStore(state => state)
+    const { task, addData } = useTaskStore(state => state);
 
-    const { addTask } = useTasksStore(state => state)
+    const { addTask } = useTasksStore(state => state);
 
     return (
         <>
@@ -26,14 +27,23 @@ const Input = () => {
                         onChangeText={(text) => addData('description', text)}
                         style={styles.textInput}
                     />
+                    <Picker
+                        selectedValue={task.priority}
+                        style={styles.picker}
+                        onValueChange={(itemValue) => addData('priority', itemValue)}
+                    >
+                        <Picker.Item label="Low" value="low" />
+                        <Picker.Item label="Medium" value="medium" />
+                        <Picker.Item label="High" value="high" />
+                    </Picker>
                 </View>
-                <TouchableOpacity style={styles.addButton} onPress={addTask}>
-                    <Image style={styles.addButtonImage} source={require('../assets/add.png')}></Image>
+                <TouchableOpacity style={styles.addButton} onPress={addTask} testID="addButton">
+                    <Image style={styles.addButtonImage} source={require('../assets/add.png')} />
                 </TouchableOpacity>
             </View>
         </>
-    )
-}
+    );
+};
 
 export default Input;
 
@@ -45,10 +55,18 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
         marginBottom: 33,
     },
+    picker: {
+        borderWidth: 1,
+        borderColor: '#FF8303',
+        borderRadius: 5,
+        backgroundColor: '#242320',
+        color: '#F0E3CA',
+        height: 43,
+    },
     inputFields: {
         flex: 1,
         marginRight: 10,
-        gap: 6
+        gap: 6,
     },
     textInput: {
         borderWidth: 1,
@@ -68,10 +86,10 @@ const styles = StyleSheet.create({
         borderColor: '#FF8303',
         borderRadius: 5,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     addButtonImage: {
         width: 30,
         height: 30,
     },
-})
+});

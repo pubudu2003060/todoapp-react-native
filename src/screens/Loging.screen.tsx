@@ -1,5 +1,5 @@
-import React, { use, useEffect } from 'react';
-import { View, Text, StyleSheet, Alert, SafeAreaView, StatusBar } from 'react-native';
+import React from 'react'; // Removed use, useEffect
+import { View, Text, StyleSheet, SafeAreaView, StatusBar } from 'react-native'; // Removed Alert
 import LottieView from 'lottie-react-native';
 import { useFocusEffect } from '@react-navigation/native';
 
@@ -10,10 +10,10 @@ export default function LoadingScreen({ navigation }: any) {
            navigation.navigate('Home');
         }, 3000);
         return () => clearTimeout(timer);
-    })
+    });
 
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView style={styles.safeArea}>
             <StatusBar
                 backgroundColor="#1B1A17"
                 barStyle="light-content"
@@ -50,5 +50,8 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 16,
         marginTop: 20,
+    },
+    safeArea: {
+        flex: 1,
     },
 });

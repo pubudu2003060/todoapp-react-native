@@ -1,6 +1,6 @@
-import { create } from "zustand";
-import { tasksStore, taskStore } from "../types/Types";
-import { Alert } from "react-native";
+import { create } from 'zustand';
+import { tasksStore, taskStore } from '../types/Types';
+// import { Alert } from 'react-native'; // Removed Alert
 
 export const useTaskStore = create<taskStore>((set) => ({
     task: {
@@ -8,61 +8,63 @@ export const useTaskStore = create<taskStore>((set) => ({
         completed: false,
         description: '',
         id: 0,
+        priority: 'medium',
     },
     addData: (key, value) => {
         set((state) => ({
-            task: { ...state.task, [key]: value }
+            task: { ...state.task, [key]: value },
         }));
     },
     removeData: () => {
-        set((state) => ({
+        set((_state) => ({ // Renamed state to _state
             task: {
                 title: '',
                 completed: false,
                 description: '',
                 id: 0,
+                priority: 'medium',
             },
         }));
     },
-}))
+}));
 
 export const useTasksStore = create<tasksStore>((set) => ({
     taskList: [],
     taskToDelete: null,
     setTaskList: (initialTaskList) => {
-        set((state) => ({
-            taskList: initialTaskList
-        }))
+        set((_state) => ({ // Renamed state to _state
+            taskList: initialTaskList,
+        }));
     },
     addTask: () => {
         const { task, removeData } = useTaskStore.getState();
-        if (task.title.trim() === "") return;
+        if (task.title.trim() === '') {return;}
         const newTask = {
             ...task,
             id: Date.now(),
         };
         set((state) => ({
-            taskList: [...state.taskList, newTask]
-        }))
-        removeData()
+            taskList: [...state.taskList, newTask],
+        }));
+        removeData();
     },
     editTask: (itemId, newValue) => {
         set((state) => {
             const newList = [...state.taskList];
-            const itemIndex = newList.findIndex((item) => item.id == itemId);
-            if (itemIndex < 0) return state;
+            const itemIndex = newList.findIndex((item) => item.id === itemId); // Changed == to ===
+            if (itemIndex < 0) {return state;}
             newList[itemIndex] = {
                 ...newList[itemIndex],
                 ...newValue,
             };
             return { taskList: newList };
-        })
+        });
 
     },
     confirmDelete: (id) => {
-        set((state) => ({
+        set((_state) => ({ // Renamed state to _state
             taskToDelete: id,
-        }))
+        }));
     },
     handleDelete: () => {
         set((state) => {
@@ -71,17 +73,18 @@ export const useTasksStore = create<tasksStore>((set) => ({
                 return {
                     taskList: newList,
                     taskToDelete: null,
-                }
+                };
             }
             return state;
-        })
+        });
     },
     doneTask: (id) => {
-        const { confirmDelete, handleDelete } = useTasksStore.getState();
+        // const { confirmDelete, handleDelete } = useTasksStore.getState(); // Removed unused confirmDelete and handleDelete
+        useTasksStore.getState(); // Call getState if it has side effects or is needed for other reasons
         set((state) => {
             const newList = [...state.taskList];
             const itemIndex = newList.findIndex((item) => item.id === id);
-            if (itemIndex < 0) return state;
+            if (itemIndex < 0) {return state;}
             newList[itemIndex] = {
                 ...newList[itemIndex],
                 completed: !newList[itemIndex].completed,
@@ -90,4 +93,4 @@ export const useTasksStore = create<tasksStore>((set) => ({
         });
 
     },
-}))
+}));

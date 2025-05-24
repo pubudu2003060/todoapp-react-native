@@ -1,5 +1,5 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 
 const NoTasks = () => {
     return (
@@ -8,8 +8,8 @@ const NoTasks = () => {
             <Text style={styles.text}>No tasks</Text>
             <View style={styles.line} />
         </View>
-    )
-}
+    );
+};
 
 const styles = StyleSheet.create({
     container: {
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
       height: 2,
       width: 64,
       backgroundColor: '#FF8303',
-    }
+    },
   });
 
-export default NoTasks
+export default NoTasks;

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { View, Text, TouchableOpacity, Modal, StyleSheet } from 'react-native';
 import { useTasksStore } from '../store/Store';
 import { deleteContextType } from '../types/Types';
@@ -6,9 +6,9 @@ import { deleteContext } from './ItemTools.component';
 
 const DeleteConfirmation = () => {
 
-  const { handleDelete } = useTasksStore(state => state)
+  const { handleDelete } = useTasksStore(state => state);
 
-  const { deleteModelVisible, setDeleteModelVisible } = useContext(deleteContext) as deleteContextType
+  const { deleteModelVisible, setDeleteModelVisible } = useContext(deleteContext) as deleteContextType;
 
   return (
     <Modal
@@ -19,7 +19,7 @@ const DeleteConfirmation = () => {
     >
       <View style={styles.modalOverlay}>
         <View style={styles.modalContainer}>
-          <View style={styles.topBar}></View>
+          <View style={styles.topBar} />
           <Text style={styles.modalTitle}>Delete this task?</Text>
 
           <View style={styles.buttonContainer}>

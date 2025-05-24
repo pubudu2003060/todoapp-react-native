@@ -1,15 +1,17 @@
-import { Button, Modal, Text, TextInput, View, StyleSheet, TouchableOpacity } from 'react-native';
-import { EditItemProps, editTask } from '../types/Types';
-import { useContext, useState } from 'react';
+import { Modal, Text, TextInput, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { EditItemProps } from '../types/Types'; // Removed unused EditTaskType
+import { useState } from 'react';
 import { useTasksStore } from '../store/Store';
+import { Picker } from '@react-native-picker/picker';
 
 const EditItem = ({ modalVisible, setModalVisible, item }: EditItemProps) => {
 
-      const { editTask } = useTasksStore(state => state)
+      const { editTask } = useTasksStore(state => state);
 
     const [taskData, setTaskData] = useState({
         title: item.title,
         description: item.description,
+        priority: item.priority || 'medium',
     });
 
     return (
@@ -22,7 +24,7 @@ const EditItem = ({ modalVisible, setModalVisible, item }: EditItemProps) => {
             <View style={styles.modalOverlay}>
                 <View style={styles.modalContainer}>
                     <TextInput
-                        placeholder='Mini Input...'
+                        placeholder="Mini Input..."
                         placeholderTextColor="#F0E3CAA3"
                         style={styles.input}
                         value={taskData.title}
@@ -30,13 +32,22 @@ const EditItem = ({ modalVisible, setModalVisible, item }: EditItemProps) => {
 
                     />
                     <TextInput
-                        placeholder='Max Input...'
+                        placeholder="Max Input..."
                         placeholderTextColor="#F0E3CAA3"
                         multiline
                         style={[styles.input, styles.bigInput]}
                         value={taskData.description}
                         onChangeText={(text) => setTaskData(prev => ({ ...prev, description: text }))}
                     />
+                    <Picker
+                        selectedValue={taskData.priority}
+                        style={styles.picker}
+                        onValueChange={(itemValue) => setTaskData(prev => ({ ...prev, priority: itemValue }))}
+                    >
+                        <Picker.Item label="Low" value="low" />
+                        <Picker.Item label="Medium" value="medium" />
+                        <Picker.Item label="High" value="high" />
+                    </Picker>
                     <View style={styles.buttonRow}>
                         <TouchableOpacity style={styles.button} onPress={() => setModalVisible(false)}>
                             <Text style={styles.buttonText}>Cancel</Text>
@@ -72,6 +83,20 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 8,
         borderWidth: 1,
         alignItems: 'center',
+    },
+    picker: {
+        borderColor: '#A35709',
+        borderWidth: 1,
+        borderRadius: 5,
+        paddingHorizontal: 10,
+        color: '#F0E3CA',
+        marginBottom: 15,
+        fontSize: 14,
+        fontWeight: '400',
+        lineHeight: 18,
+        backgroundColor: '#242320',
+        width: 324,
+        height: 43, // Ensure consistent height with other inputs
     },
     input: {
         borderColor: '#A35709',
